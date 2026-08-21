@@ -75,6 +75,15 @@ Every outstanding item is also marked with a `[CONFIRM]` comment in the HTML:
 grep -rn "CONFIRM" .
 ```
 
+## This is currently a preview build
+
+The site is live at **https://saturnresults.co.uk/tony-kosoko-physiotherapy/** for review. It is deliberately hidden from search engines: every page carries `<meta name="robots" content="noindex, nofollow">`.
+
+**When moving to the live domain, remove both of these or the site will never rank:**
+
+1. The `noindex` meta tag in every page's `<head>`
+2. `robots.txt` (it does nothing in a subdirectory, but would block everything at a domain root)
+
 ## Notes on the assets
 
 The photography is licensed stock imagery, resized and optimised for the web. Check the licence terms before redistributing the image files themselves.
