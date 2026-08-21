@@ -1,0 +1,9 @@
+# This is a preview build on a temporary github.io address, not the live site.
+# Keep it out of search results so it cannot compete with, or be mistaken for,
+# www.tonykosokophysiotherapy.com once that goes live. The enquiry form is also
+# not yet connected, so this build should not be found by prospective patients.
+#
+# DELETE THIS FILE when the site moves to the real domain and is ready to rank.
+
+User-agent: *
+Disallow: /
