@@ -1,9 +1,9 @@
-# This is a preview build on a temporary github.io address, not the live site.
-# Keep it out of search results so it cannot compete with, or be mistaken for,
-# www.tonykosokophysiotherapy.com once that goes live. The enquiry form is also
-# not yet connected, so this build should not be found by prospective patients.
+# NOTE: this file only has any effect if the site is served from a domain ROOT.
+# The current preview lives in a subdirectory, where crawlers ignore it, so the
+# real protection is the noindex meta tag in every page's <head>.
 #
-# DELETE THIS FILE when the site moves to the real domain and is ready to rank.
+# When moving to the live domain: delete this file AND remove the noindex meta
+# tag from every page, or the site will never appear in search results.
 
 User-agent: *
 Disallow: /
