@@ -91,8 +91,6 @@ h1,h2,h3,h4{margin:0}
    flash of a header appearing as it slides away is what reads as glitchy */
 .site-header.is-hidden .header-inner{transition:none}
 .site-header.is-solid{--hd-fg:var(--ink);--hd-muted:#5A6469;--hd-accent:var(--teal);--hd-pill:#F1F4F4;--hd-pill-bd:transparent}
-/* inner pages have a light top area, so the pill is always on */
-.site-header.always-solid{--hd-fg:var(--ink);--hd-muted:#5A6469;--hd-accent:var(--teal);--hd-pill:#F1F4F4;--hd-pill-bd:transparent}
 .header-inner{
   max-width:var(--maxw);margin-inline:auto;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
@@ -100,13 +98,12 @@ h1,h2,h3,h4{margin:0}
   background:transparent;box-shadow:none;
   transition:background .3s ease,box-shadow .3s ease;
 }
-.site-header.is-solid .header-inner,
-.site-header.always-solid .header-inner{background:var(--white);box-shadow:0 12px 34px -14px rgba(0,0,0,.35)}
+.site-header.is-solid .header-inner{background:var(--white);box-shadow:0 12px 34px -14px rgba(0,0,0,.35)}
 .brand{display:flex;align-items:center;gap:11px}
 .brand__mark{width:auto;height:36px}
 .mark-dark{display:none}
-.is-solid .mark-light,.always-solid .mark-light{display:none}
-.is-solid .mark-dark,.always-solid .mark-dark{display:block}
+.is-solid .mark-light{display:none}
+.is-solid .mark-dark{display:block}
 .brand__name{line-height:1;display:flex;flex-direction:column;gap:3px}
 .brand__name b{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:19px;letter-spacing:.2px;color:var(--hd-fg);transition:color .3s}
 .brand__name span{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--hd-accent);transition:color .3s}
@@ -256,7 +253,7 @@ h1,h2,h3,h4{margin:0}
 .fees th,.fees td{padding:17px 26px;text-align:left;border-bottom:1px solid var(--sec-border);font-size:1rem}
 .fees thead th{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--kicker);font-weight:600}
 .fees tbody th{font-weight:500;color:var(--sec-ink)}
-.fees td.dur{color:var(--sec-body);white-space:nowrap}
+.fees td.dur{color:var(--sec-body)}
 .fees td.fee{text-align:right;font-weight:600;color:var(--sec-ink);white-space:nowrap;font-size:1.08rem}
 .fees tbody tr:last-child th,.fees tbody tr:last-child td{border-bottom:0}
 .fees tbody tr.highlight{background:color-mix(in srgb,var(--kicker) 9%,transparent)}
@@ -405,6 +402,23 @@ body.no-scroll{overflow:hidden}
   .grid-2,.grid-3,.svc-grid,.loc-grid{grid-template-columns:1fr}
   .ticks{grid-template-columns:1fr}
   .field-row{grid-template-columns:1fr}
+}
+/* On a phone there is not enough width for three columns, and the fee column
+   was scrolling out of sight inside .table-scroll, hiding the one thing the
+   page exists to tell you. Each row becomes a block instead: appointment and
+   duration stacked on the left, fee on the right. The thead is dropped to
+   screen-reader only, and the row headers still scope the fees correctly. */
+@media (max-width:620px){
+  .table-scroll{overflow-x:visible}
+  .fees table,.fees tbody,.fees tbody tr,.fees tbody th,.fees tbody td{display:block;width:auto}
+  .fees thead{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .fees tbody tr{display:grid;grid-template-columns:1fr auto;column-gap:16px;
+    padding:16px 18px;border-bottom:1px solid var(--sec-border)}
+  .fees tbody tr:last-child{border-bottom:0}
+  .fees tbody th,.fees tbody td{border:0;padding:0}
+  .fees tbody th{grid-column:1;grid-row:1;font-size:1rem}
+  .fees td.dur{grid-column:1;grid-row:2;font-size:.93rem;margin-top:3px}
+  .fees td.fee{grid-column:2;grid-row:1 / span 2;align-self:center;text-align:right}
 }
 @media (max-width:520px){
   .trust__logos img{height:30px}.trust__logos img.csp{height:39px}.trust__logos img.bupa{height:25px}

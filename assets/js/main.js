@@ -32,28 +32,38 @@
     }, 1500);
   }
 
-  /* ---- header: solid pill on scroll, hide on scroll down, fade back in ---- */
+  /* ---- header ---- */
   var header = document.getElementById('siteHeader');
   if (header) {
-    var alwaysSolid = header.classList.contains('always-solid');
     var hero = document.querySelector('.hero') || document.querySelector('.page-hero');
-    var lastY = Math.max(window.scrollY, 0);
-    var SOLID_AT = 40, DELTA = 8;
 
-    // The header stays in view for as long as the hero is on screen. It only
-    // starts tucking away once the visitor is into the page proper, so it never
-    // appears and vanishes within the first flick of a scroll.
-    var stayVisibleBelow = function(){
-      return hero ? Math.max(hero.offsetHeight - 90, 130) : 130;
+    /* While the hero is on screen the header belongs to it: transparent, no
+       pill, and always there. Past the hero it becomes the floating white pill,
+       and from then on it only appears when you scroll back up. */
+    var heroEdge = function(){
+      return hero ? Math.max(hero.offsetHeight - 96, 120) : 120;
     };
+
+    /* Direction is accumulated rather than compared between consecutive events.
+       A trackpad fires a stream of scroll events a few pixels apart, so a
+       per-event threshold is never crossed on a smooth scroll and the header
+       would only come back if you flicked at it. */
+    var lastY = Math.max(window.scrollY, 0);
+    var up = 0, down = 0;
+    var UP_TO_SHOW = 6, DOWN_TO_HIDE = 10;
 
     var updateHeader = function(){
       var y = Math.max(window.scrollY, 0);
-      if (!alwaysSolid) header.classList.toggle('is-solid', y > SOLID_AT);
-      if (y <= stayVisibleBelow()) header.classList.remove('is-hidden');
-      else if (y > lastY + DELTA) header.classList.add('is-hidden');
-      else if (y < lastY - DELTA) header.classList.remove('is-hidden');
+      if (y < lastY) { up += lastY - y; down = 0; }
+      else if (y > lastY) { down += y - lastY; up = 0; }
       lastY = y;
+
+      var pastHero = y > heroEdge();
+      header.classList.toggle('is-solid', pastHero);
+
+      if (!pastHero) { header.classList.remove('is-hidden'); return; }
+      if (up > UP_TO_SHOW) header.classList.remove('is-hidden');
+      else if (down > DOWN_TO_HIDE) header.classList.add('is-hidden');
     };
     window.addEventListener('scroll', updateHeader, {passive:true});
     window.addEventListener('resize', updateHeader);
