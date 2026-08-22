@@ -15,7 +15,15 @@
         if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
       });
     }, {threshold:.14, rootMargin:'0px 0px -8% 0px'});
-    Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function(el){ io.observe(el); });
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function(el){
+      /* Anything already on screen at load is shown at once, by dropping the
+         class that hides it. Fading it in means half a second of empty page,
+         and on a phone the hero is short enough that the section below it is
+         usually already in view, so the first thing you see is a blank block. */
+      if (el.getBoundingClientRect().top < vh) { el.classList.remove('reveal'); return; }
+      io.observe(el);
+    });
 
     /* Belt and braces. Every section on this site starts at opacity 0 and is
        revealed by the observer above, so if the observer is throttled or
@@ -52,6 +60,11 @@
     var up = 0, down = 0;
     var UP_TO_SHOW = 6, DOWN_TO_HIDE = 10;
 
+    /* The home page's hero fills the screen; the chat launcher is hidden over it
+       on a phone so it does not sit on top of the booking bar. */
+    var homeHero = !!document.querySelector('.hero');
+    var floating = null;
+
     var updateHeader = function(){
       var y = Math.max(window.scrollY, 0);
       if (y < lastY) { up += lastY - y; down = 0; }
@@ -59,7 +72,22 @@
       lastY = y;
 
       var pastHero = y > heroEdge();
-      header.classList.toggle('is-solid', pastHero);
+
+      if (pastHero !== floating) {
+        /* Crossing the boundary the header changes from docked to floating.
+           Snap straight to the new state with the transition off: otherwise it
+           lands at the top of the viewport at full opacity and then fades out,
+           which reads as the header flashing into view at the end of the hero. */
+        floating = pastHero;
+        header.classList.add('no-anim');
+        header.classList.toggle('is-solid', pastHero);
+        header.classList.toggle('is-hidden', pastHero);
+        if (homeHero) document.documentElement.classList.toggle('in-home-hero', !pastHero);
+        void header.offsetWidth;
+        header.classList.remove('no-anim');
+        up = down = 0;
+        return;
+      }
 
       if (!pastHero) { header.classList.remove('is-hidden'); return; }
       if (up > UP_TO_SHOW) header.classList.remove('is-hidden');
