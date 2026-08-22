@@ -81,7 +81,10 @@ h1,h2,h3,h4{margin:0}
 .site-header{
   --hd-fg:#fff;--hd-muted:rgba(255,255,255,.88);--hd-accent:var(--teal-bright);
   --hd-pill:rgba(255,255,255,.14);--hd-pill-bd:rgba(255,255,255,.32);
-  position:fixed;top:0;left:0;right:0;z-index:60;
+  /* Docked to the top of the page, not floating over it, so hero copy scrolls
+     away cleanly instead of sliding underneath a transparent bar. It only
+     lifts off and becomes fixed once past the hero, as the white pill. */
+  position:absolute;top:0;left:0;right:0;z-index:60;
   padding:14px clamp(12px,3vw,28px);
   transition:opacity .34s ease,transform .34s cubic-bezier(.4,0,.2,1);
   will-change:opacity,transform;
@@ -90,7 +93,7 @@ h1,h2,h3,h4{margin:0}
 /* while it is leaving, do not let the pill fade to white behind it: that
    flash of a header appearing as it slides away is what reads as glitchy */
 .site-header.is-hidden .header-inner{transition:none}
-.site-header.is-solid{--hd-fg:var(--ink);--hd-muted:#5A6469;--hd-accent:var(--teal);--hd-pill:#F1F4F4;--hd-pill-bd:transparent}
+.site-header.is-solid{position:fixed;--hd-fg:var(--ink);--hd-muted:#5A6469;--hd-accent:var(--teal);--hd-pill:#F1F4F4;--hd-pill-bd:transparent}
 .header-inner{
   max-width:var(--maxw);margin-inline:auto;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
