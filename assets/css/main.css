@@ -162,18 +162,9 @@ h1,h2,h3,h4{margin:0}
 /* accreditation band: a rounded white panel that overlays the bottom of the
    hero, so the photo stays visible around its top corners. Dark logo variants
    are used here; the white ones are kept for the dark footer. */
-.trust{position:relative;z-index:2}
-.trust__inner{display:flex;align-items:center;justify-content:flex-start;padding-block:0}
-/* the panel itself. It is only as wide as the logos need, so it covers the
-   left portion of the hero and the photo stays visible to the right of it.
-   The negative margin bleeds the background out to the viewport edge while
-   the equal padding puts the first logo back on the 1240px content column,
-   in line with the copy in the section below. The two cancel exactly, so a
-   scrollbar cannot knock the logos out of alignment. */
-.trust__logos{display:flex;align-items:center;justify-content:flex-start;gap:clamp(20px,3.2vw,48px);flex-wrap:nowrap;
-  background:var(--off-white);border-radius:0 34px 0 0;
-  padding-block:26px;padding-right:clamp(30px,4.5vw,64px);
-  margin-left:calc((100% - 100vw) / 2);padding-left:calc((100vw - 100%) / 2)}
+.trust{position:relative;z-index:2;background:var(--off-white);border-radius:34px 34px 0 0}
+.trust__inner{display:flex;align-items:center;justify-content:center;padding-block:26px}
+.trust__logos{display:flex;align-items:center;justify-content:center;gap:clamp(20px,3.2vw,48px);flex-wrap:wrap}
 .trust__logos img{height:40px;width:auto;opacity:.68;filter:saturate(0)}
 .trust__logos img.csp{height:52px}   /* tall marquise seal */
 .trust__logos img.bupa{height:34px}  /* wide wordmark, sized to match optically */
@@ -414,14 +405,6 @@ body.no-scroll{overflow:hidden}
   .grid-2,.grid-3,.svc-grid,.loc-grid{grid-template-columns:1fr}
   .ticks{grid-template-columns:1fr}
   .field-row{grid-template-columns:1fr}
-}
-@media (max-width:920px){
-  /* not enough room to sit in the left portion, so go back to a full width
-     centred band across the bottom of the hero */
-  .trust{background:var(--off-white);border-radius:34px 34px 0 0}
-  .trust__inner{justify-content:center;padding-block:26px}
-  .trust__logos{background:none;border-radius:0;justify-content:center;flex-wrap:wrap;
-    margin-left:0;padding:0}
 }
 @media (max-width:520px){
   .trust__logos img{height:30px}.trust__logos img.csp{height:39px}.trust__logos img.bupa{height:25px}
