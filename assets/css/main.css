@@ -212,7 +212,7 @@ h1,h2,h3,h4{margin:0}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .vcard{background:var(--sec-card);border:1px solid var(--sec-border);border-radius:18px;padding:28px 26px}
 .vcard .num{font-family:"Newsreader",serif;font-size:1.1rem;color:var(--kicker);font-weight:600;margin-bottom:12px;display:block}
-.vcard h3{font-family:"Newsreader",serif;font-weight:500;font-size:1.35rem;color:var(--sec-ink);margin-bottom:10px}
+.vcard h2,.vcard h3,.prose .vcard h2{font-family:"Newsreader",serif;font-weight:500;font-size:1.35rem;color:var(--sec-ink);margin:0 0 10px}
 .vcard p{font-size:.98rem;line-height:1.55}
 
 /* service cards */
@@ -223,7 +223,7 @@ h1,h2,h3,h4{margin:0}
 .svc__img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
 .svc:hover .svc__img img{transform:scale(1.05)}
 .svc__body{padding:26px 24px 28px;display:flex;flex-direction:column;flex:1}
-.svc__body h3{font-family:"Newsreader",serif;font-weight:500;font-size:1.4rem;color:var(--sec-ink);margin-bottom:10px}
+.svc__body h2,.svc__body h3{font-family:"Newsreader",serif;font-weight:500;font-size:1.4rem;color:var(--sec-ink);margin-bottom:10px}
 .svc__body p{font-size:.97rem;line-height:1.55;flex:1}
 .svc__body .arrowlink{margin-top:18px}
 

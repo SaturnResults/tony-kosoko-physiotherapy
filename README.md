@@ -77,14 +77,38 @@ Every outstanding item is also marked with a `[CONFIRM]` comment in the HTML:
 grep -rn "CONFIRM" .
 ```
 
-## This is currently a preview build
+The `[CONFIRM]` markers live in `build_site.py` as well, since the pages are generated.
 
-The site is live at **https://saturnresults.co.uk/tony-kosoko-physiotherapy/** for review. It is deliberately hidden from search engines: every page carries `<meta name="robots" content="noindex, nofollow">`.
+## Search
 
-**When moving to the live domain, remove both of these or the site will never rank:**
+Every page has a unique title (all under 60 characters so Google does not truncate them), a unique meta description, a canonical URL, Open Graph and Twitter card tags, and a single `h1` with no gaps in the heading levels below it.
 
-1. The `noindex` meta tag in every page's `<head>`
-2. `robots.txt` (it does nothing in a subdirectory, but would block everything at a domain root)
+Structured data is one `@graph` per page, in `<head>`:
+
+- a `MedicalBusiness` / `Physiotherapy` entity for the practice, carrying the phone number, email, the Portobello address, opening hours, the areas served and an `OfferCatalog` of the real fees
+- a `Place` for Westway, with its own address and hours
+- a `Person` for Tony, with his job title, King's College London, and CSP and MACP membership
+- a `WebPage` and, on every page below the home page, a `BreadcrumbList` matching the visible breadcrumb trail
+
+Opening hours are declared once, in `LOCS` in the generator, as `(days, opens, closes)`. The visible times on the page and the `openingHoursSpecification` in the schema are both derived from that, so they cannot drift apart.
+
+`sitemap.xml`, `robots.txt` and `404.html` are all generated, so none of them can fall out of step with the pages.
+
+### This is currently a preview build
+
+The site is live at **https://saturnresults.co.uk/tony-kosoko-physiotherapy/** for review, and is deliberately hidden from search engines.
+
+**Going live is one change.** Set `PREVIEW = False` at the top of `build_site.py` and rebuild. That removes the `noindex` meta tag from all thirteen pages, replaces it with an explicit `index, follow`, opens `robots.txt` and points it at the sitemap, and repoints the 404 page's links from the preview subdirectory to the domain root.
+
+Do not hand-edit the `noindex` tags. They are generated, and the next rebuild would put them back.
+
+### Not done, and worth doing
+
+- **A Google Business Profile is the single biggest thing missing.** For a local practice it outweighs everything on this list. The site's structured data is built to agree with it, so the name, address, phone number and hours should be entered exactly as they appear on the Locations page.
+- **HCPC and MCSP registration numbers.** They are a direct trust signal, they belong on the About page, and they would go into the schema as `identifier` entries on the `Person`. Marked `[CONFIRM]`.
+- **No reviews or ratings are claimed anywhere.** `AggregateRating` markup would be tempting and is a manual penalty if the reviews are not real and visible on the page. Once Tony has genuine reviews, they can be added properly.
+- **Latitude and longitude are not in the schema.** Google geocodes the postal address instead, so this is optional, but exact coordinates are better if the clinic entrances are hard to find.
+- **No social profiles are linked.** If Tony has any, they should go in the `sameAs` array on the practice entity.
 
 ## Notes on the assets
 

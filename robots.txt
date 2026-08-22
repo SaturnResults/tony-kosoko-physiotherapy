@@ -1,9 +1,8 @@
-# NOTE: this file only has any effect if the site is served from a domain ROOT.
-# The current preview lives in a subdirectory, where crawlers ignore it, so the
-# real protection is the noindex meta tag in every page's <head>.
-#
-# When moving to the live domain: delete this file AND remove the noindex meta
-# tag from every page, or the site will never appear in search results.
+# PREVIEW BUILD.
+# This file only has any effect at a domain ROOT. The preview lives in a
+# subdirectory, where crawlers never read it, so the real protection is the
+# noindex meta tag in every page's <head>. Both are controlled by the
+# PREVIEW flag at the top of build_site.py: set it to False and rebuild.
 
 User-agent: *
 Disallow: /
