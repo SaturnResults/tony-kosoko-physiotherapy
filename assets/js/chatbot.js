@@ -77,11 +77,15 @@
   /* ── Answers ─────────────────────────────────────────────────────────────
      Every figure below is taken from the live pages, so the bot cannot
      contradict the site.                                                    */
+  // pages live at /<slug>/, so links need a prefix that depends on how deep
+  // the current page is. Each page sets window.TK_BASE before this loads.
+  var BASE = (typeof window.TK_BASE === 'string') ? window.TK_BASE : '';
+
   var A = {
-    book:   { label: 'Book an initial assessment', href: 'book.html' },
-    fees:   { label: 'See all fees',               href: 'fees.html' },
-    where:  { label: 'Locations and directions',   href: 'locations.html' },
-    expect: { label: 'What to expect',             href: 'what-to-expect.html' },
+    book:   { label: 'Book an initial assessment', href: BASE + 'book/' },
+    fees:   { label: 'See all fees',               href: BASE + 'fees/' },
+    where:  { label: 'Locations and directions',   href: BASE + 'locations/' },
+    expect: { label: 'What to expect',             href: BASE + 'what-to-expect/' },
     call:   { label: 'Call ' + PHONE,              href: PHONE_HREF }
   };
 
@@ -353,7 +357,7 @@
       '<h3>Before we start</h3>' +
       '<p>This chat can answer questions about fees, times, locations and booking. It is not able to give medical advice.</p>' +
       '<p>If you choose <strong>Start chat</strong>, the conversation is saved so Tony can follow up and improve the service. ' +
-      'You can ask for it to be deleted at any time. See the <a href="privacy.html">Privacy Policy</a>.</p>';
+      'You can ask for it to be deleted at any time. See the <a href="' + BASE + 'privacy/">Privacy Policy</a>.</p>';
     var btns = el('div', 'tkc-btns');
     var yes = el('button', 'tkc-btn tkc-btn--primary', 'Start chat');
     var no  = el('button', 'tkc-btn tkc-btn--quiet', 'Chat without saving');
@@ -381,7 +385,7 @@
     if (withConsent && legalLine) {
       legalLine.innerHTML = 'Not medical advice. In an emergency call 999. ' +
         'This chat is saved. Reference <strong>' + session + '</strong>, quote it to ask for deletion. ' +
-        'See our <a href="privacy.html">Privacy Policy</a>.';
+        'See our <a href="' + BASE + 'privacy/">Privacy Policy</a>.';
     }
     addMsg('bot', GREETING);
     input.focus();
@@ -426,7 +430,7 @@
     panel.setAttribute('aria-hidden', 'true');
 
     var head = el('div', 'tkc-head',
-      '<img class="tkc-head__mark" src="assets/logos/logo-mark-white.png" alt="">' +
+      '<img class="tkc-head__mark" src="' + BASE + 'assets/logos/logo-mark-white.png" alt="">' +
       '<div class="tkc-head__txt"><b>Ask a question</b><span>General enquiries only. I cannot give medical advice.</span></div>');
     var closeBtn = el('button', 'tkc-close', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>');
     closeBtn.type = 'button';
@@ -448,7 +452,7 @@
     sendBtn.setAttribute('aria-label', 'Send');
     foot.appendChild(input); foot.appendChild(sendBtn);
 
-    legalLine = el('div', 'tkc-legal', 'Not medical advice. In an emergency call 999. See our <a href="privacy.html">Privacy Policy</a>.');
+    legalLine = el('div', 'tkc-legal', 'Not medical advice. In an emergency call 999. See our <a href="' + BASE + 'privacy/">Privacy Policy</a>.');
 
     panel.appendChild(head);
     panel.appendChild(body);

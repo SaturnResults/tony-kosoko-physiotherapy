@@ -2,11 +2,11 @@
 
 The website for Tony Kosoko Physiotherapy Ltd, an advanced musculoskeletal physiotherapy practice in Notting Hill, West London.
 
-Thirteen static pages. No build step, no framework, no dependencies. Open `index.html` in a browser and it runs.
+Thirteen static pages. No build step, no framework, no dependencies.
 
 ## Running it locally
 
-Double-clicking `index.html` works, because every path is relative. To exercise it properly (the booking bar passes the chosen service and location to the booking page through the query string), serve the folder instead:
+The pages use extensionless URLs (`/fees/`, not `/fees.html`), so each one is a folder containing an `index.html`. That means opening a file directly from Finder will not work: a link to `../fees/` needs a server to resolve to `fees/index.html`. Serve the folder:
 
 ```bash
 python3 -m http.server 8000
@@ -17,19 +17,19 @@ Then visit `http://localhost:8000`.
 ## What is here
 
 ```
-index.html              Home
-about.html              About Tony
-services.html           Services overview
-  services-msk.html         Musculoskeletal physiotherapy
-  services-strength.html    Strength and conditioning
-  services-mens-health.html Men's health physiotherapy
-what-to-expect.html     Your first appointment
-fees.html               Fees and insurance
-locations.html          Both clinics, hours, maps
-book.html               Enquiry form
-privacy.html            Privacy policy
-terms.html              Terms and conditions
-cookies.html            Cookie policy
+index.html                      Home                      /
+about/index.html                About Tony                /about/
+services/index.html             Services overview         /services/
+  services-msk/                   Musculoskeletal physiotherapy
+  services-strength/              Strength and conditioning
+  services-mens-health/           Men's health physiotherapy
+what-to-expect/index.html       Your first appointment    /what-to-expect/
+fees/index.html                 Fees and insurance        /fees/
+locations/index.html            Both clinics, hours, maps /locations/
+book/index.html                 Enquiry form              /book/
+privacy/index.html              Privacy policy            /privacy/
+terms/index.html                Terms and conditions      /terms/
+cookies/index.html              Cookie policy             /cookies/
 
 assets/css/main.css     All styling
 assets/js/main.js       Header, drawer, form, maps, reveals
@@ -39,6 +39,8 @@ assets/logos/           Brand mark and accreditation logos
 ```
 
 The header, footer and mobile drawer are repeated in each page rather than pulled in at runtime. That is deliberate: it keeps the site dependency-free and means any page can be edited on its own. The trade-off is that a change to the header has to be made in all thirteen files.
+
+Every path is relative, and the inner pages sit one folder down, so their links to assets carry a `../` prefix while the home page's do not. `assets/js/chatbot.js` builds some links in JavaScript, so each page sets `window.TK_BASE` (empty on the home page, `../` elsewhere) just before loading it.
 
 ## Design
 
@@ -61,13 +63,13 @@ Two safety features are load-bearing and should not be removed:
 
 ## Before this goes live
 
-- [ ] **The enquiry form does not submit anywhere.** `book.html` has `action="#"` and shows a confirmation message via JavaScript. Point it at a form service (Formspree, Basin, Netlify Forms) or enquiries will be lost.
+- [ ] **The enquiry form does not submit anywhere.** `book/index.html` has `action="#"` and shows a confirmation message via JavaScript. Point it at a form service (Formspree, Basin, Netlify Forms) or enquiries will be lost.
 - [ ] Confirm the email address. `info@tonykosokophysiotherapy.com` is assumed throughout.
-- [ ] Add the HCPC registration number and MCSP number on `about.html`.
+- [ ] Add the HCPC registration number and MCSP number on `about/index.html`.
 - [ ] Confirm Westway Saturday hours. The source document says 8.00am to 11.00pm, and 11.00am is assumed.
 - [ ] Replace the placeholder testimonial on the home page. It is currently labelled as a placeholder.
-- [ ] Confirm strength and conditioning session pricing, and accepted payment methods, on `fees.html`.
-- [ ] **Have the legal pages reviewed.** `privacy.html`, `terms.html` and `cookies.html` are drafts and say so on the page. The privacy policy covers clinical records as special category health data and should be read by Tony, and ideally by a data protection adviser, before publication.
+- [ ] Confirm strength and conditioning session pricing, and accepted payment methods, on `fees/index.html`.
+- [ ] **Have the legal pages reviewed.** `privacy/`, `terms/` and `cookies/` are drafts and say so on the page. The privacy policy covers clinical records as special category health data and should be read by Tony, and ideally by a data protection adviser, before publication.
 
 Every outstanding item is also marked with a `[CONFIRM]` comment in the HTML:
 

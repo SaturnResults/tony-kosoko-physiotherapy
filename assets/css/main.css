@@ -83,10 +83,13 @@ h1,h2,h3,h4{margin:0}
   --hd-pill:rgba(255,255,255,.14);--hd-pill-bd:rgba(255,255,255,.32);
   position:fixed;top:0;left:0;right:0;z-index:60;
   padding:14px clamp(12px,3vw,28px);
-  transition:transform .38s cubic-bezier(.4,0,.2,1);
-  will-change:transform;
+  transition:transform .42s cubic-bezier(.4,0,.2,1),opacity .34s ease;
+  will-change:transform,opacity;
 }
-.site-header.is-hidden{transform:translateY(-140%)}
+.site-header.is-hidden{transform:translateY(-130%);opacity:0}
+/* while it is leaving, do not let the pill fade to white behind it: that
+   flash of a header appearing as it slides away is what reads as glitchy */
+.site-header.is-hidden .header-inner{transition:none}
 .site-header.is-solid{--hd-fg:var(--ink);--hd-muted:#5A6469;--hd-accent:var(--teal);--hd-pill:#F1F4F4;--hd-pill-bd:transparent}
 /* inner pages have a light top area, so the pill is always on */
 .site-header.always-solid{--hd-fg:var(--ink);--hd-muted:#5A6469;--hd-accent:var(--teal);--hd-pill:#F1F4F4;--hd-pill-bd:transparent}
@@ -100,7 +103,7 @@ h1,h2,h3,h4{margin:0}
 .site-header.is-solid .header-inner,
 .site-header.always-solid .header-inner{background:var(--white);box-shadow:0 12px 34px -14px rgba(0,0,0,.35)}
 .brand{display:flex;align-items:center;gap:11px}
-.brand__mark{width:36px;height:36px;object-fit:contain}
+.brand__mark{width:auto;height:36px}
 .mark-dark{display:none}
 .is-solid .mark-light,.always-solid .mark-light{display:none}
 .is-solid .mark-dark,.always-solid .mark-dark{display:block}
@@ -144,7 +147,7 @@ h1,h2,h3,h4{margin:0}
   linear-gradient(180deg, rgba(19,22,23,.84) 0%, rgba(27,31,33,.30) 26%, rgba(27,31,33,.34) 58%, rgba(19,22,23,.66) 100%)}
 .hero__body{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-block:120px 26px}
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:22px}
-.eyebrow .spark{color:var(--teal-bright);font-size:15px;line-height:1}
+.eyebrow .spark{width:14px;height:14px;flex:0 0 auto;color:var(--teal-bright)}
 .hero h1{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:clamp(2.6rem,6.4vw,5.6rem);line-height:1.02;letter-spacing:-.01em;margin:0 0 20px;color:#fff;max-width:15ch;text-wrap:balance}
 .hero__sub{font-size:clamp(1rem,1.5vw,1.22rem);line-height:1.55;color:rgba(255,255,255,.9);max-width:52ch;margin:0 auto}
 
@@ -159,9 +162,18 @@ h1,h2,h3,h4{margin:0}
 /* accreditation band: a rounded white panel that overlays the bottom of the
    hero, so the photo stays visible around its top corners. Dark logo variants
    are used here; the white ones are kept for the dark footer. */
-.trust{position:relative;z-index:2;background:var(--off-white);border-radius:34px 34px 0 0}
-.trust__inner{display:flex;align-items:center;justify-content:center;padding-block:26px}
-.trust__logos{display:flex;align-items:center;justify-content:center;gap:clamp(20px,3.2vw,48px);flex-wrap:wrap}
+.trust{position:relative;z-index:2}
+.trust__inner{display:flex;align-items:center;justify-content:flex-start;padding-block:0}
+/* the panel itself. It is only as wide as the logos need, so it covers the
+   left portion of the hero and the photo stays visible to the right of it.
+   The negative margin bleeds the background out to the viewport edge while
+   the equal padding puts the first logo back on the 1240px content column,
+   in line with the copy in the section below. The two cancel exactly, so a
+   scrollbar cannot knock the logos out of alignment. */
+.trust__logos{display:flex;align-items:center;justify-content:flex-start;gap:clamp(20px,3.2vw,48px);flex-wrap:nowrap;
+  background:var(--off-white);border-radius:0 34px 0 0;
+  padding-block:26px;padding-right:clamp(30px,4.5vw,64px);
+  margin-left:calc((100% - 100vw) / 2);padding-left:calc((100vw - 100%) / 2)}
 .trust__logos img{height:40px;width:auto;opacity:.68;filter:saturate(0)}
 .trust__logos img.csp{height:52px}   /* tall marquise seal */
 .trust__logos img.bupa{height:34px}  /* wide wordmark, sized to match optically */
@@ -330,7 +342,7 @@ h1,h2,h3,h4{margin:0}
 .footer a:hover{color:#fff}
 .footer__brand p{font-size:14.5px;line-height:1.6;max-width:34ch;margin:14px 0 0}
 .footer__mark{display:flex;align-items:center;gap:11px}
-.footer__mark img{width:34px;height:34px}
+.footer__mark img{width:auto;height:34px}
 .footer__mark b{font-family:"Newsreader",serif;font-weight:500;font-size:18px;color:#fff}
 .footer__logos{display:flex;align-items:center;gap:clamp(14px,1.6vw,24px);flex-wrap:wrap;margin-top:22px}
 .footer__logos img{height:28px;width:auto;opacity:.62;filter:saturate(0)}
@@ -358,7 +370,7 @@ body.no-scroll{overflow:hidden}
 .drawer.is-open{transform:none;visibility:visible;transition:transform .34s cubic-bezier(.4,0,.2,1), visibility 0s}
 .drawer__head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
 .drawer__brand{display:flex;align-items:center;gap:10px}
-.drawer__brand img{width:32px;height:32px}
+.drawer__brand img{width:auto;height:32px}
 .drawer__brand b{font-family:"Newsreader",serif;font-weight:500;font-size:17px;color:#fff}
 .drawer__close{width:42px;height:42px;border-radius:var(--radius);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
 .drawer__close:hover{background:rgba(255,255,255,.18)}
@@ -370,6 +382,13 @@ body.no-scroll{overflow:hidden}
 .drawer__links a:hover svg{transform:translateX(4px)}
 .drawer__links .sub{font-size:15px;padding-left:16px;color:rgba(255,255,255,.82)}
 .drawer__group{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-bright);margin:18px 0 2px;font-weight:600}
+.drawer__acc{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
+  background:none;border:0;cursor:pointer;padding:11px 0;margin-top:6px;
+  font-family:"Work Sans",sans-serif;font-size:17px;font-weight:500;color:#fff;text-align:left}
+.drawer__chev{width:14px;height:14px;flex:0 0 auto;color:var(--teal-bright);transition:transform .24s ease}
+.drawer__acc[aria-expanded="true"] .drawer__chev{transform:rotate(180deg)}
+.drawer__panel[hidden]{display:none}
+.drawer__panel{display:flex;flex-direction:column;padding-bottom:6px}
 .drawer__foot{padding:18px 20px calc(24px + env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;gap:11px}
 .drawer__foot .btn{width:100%}
 .drawer__phone{display:flex;align-items:center;justify-content:center;gap:9px;color:#fff;font-size:15px;font-weight:500;padding:12px;border-radius:var(--radius);border:1px solid rgba(255,255,255,.28)}
@@ -396,8 +415,16 @@ body.no-scroll{overflow:hidden}
   .ticks{grid-template-columns:1fr}
   .field-row{grid-template-columns:1fr}
 }
+@media (max-width:920px){
+  /* not enough room to sit in the left portion, so go back to a full width
+     centred band across the bottom of the hero */
+  .trust{background:var(--off-white);border-radius:34px 34px 0 0}
+  .trust__inner{justify-content:center;padding-block:26px}
+  .trust__logos{background:none;border-radius:0;justify-content:center;flex-wrap:wrap;
+    margin-left:0;padding:0}
+}
 @media (max-width:520px){
-  .trust__logos img{height:26px}.trust__logos img.csp{height:34px}.trust__logos img.bupa{height:22px}
+  .trust__logos img{height:30px}.trust__logos img.csp{height:39px}.trust__logos img.bupa{height:25px}
   .footer__top{grid-template-columns:1fr}
   .fees th,.fees td{padding:14px 16px}
   .steps li{padding:22px 20px 22px 20px}
@@ -426,6 +453,7 @@ body.no-scroll{overflow:hidden}
 .tkc-launch:hover{background:#0d7f75;transform:translateY(-2px)}
 .tkc-launch svg{width:17px;height:17px}
 .tkc-launch.tkc-hide{opacity:0;pointer-events:none;transform:translateY(8px)}
+body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
 
 .tkc-panel{
   position:fixed;right:22px;bottom:22px;z-index:91;

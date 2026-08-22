@@ -9,11 +9,13 @@
   var header = document.getElementById('siteHeader');
   if (header && !header.classList.contains('always-solid')) {
     var lastY = Math.max(window.scrollY, 0);
-    var SOLID_AT = 40, DELTA = 5;
+    // the pill turns solid well before the header is allowed to tuck away, so
+    // it never appears and vanishes in the same gesture
+    var SOLID_AT = 40, HIDE_AT = 130, DELTA = 8;
     var updateHeader = function(){
       var y = Math.max(window.scrollY, 0);
       header.classList.toggle('is-solid', y > SOLID_AT);
-      if (y <= SOLID_AT) header.classList.remove('is-hidden');
+      if (y <= HIDE_AT) header.classList.remove('is-hidden');
       else if (y > lastY + DELTA) header.classList.add('is-hidden');
       else if (y < lastY - DELTA) header.classList.remove('is-hidden');
       lastY = y;
@@ -25,9 +27,9 @@
     var lastY2 = Math.max(window.scrollY, 0);
     window.addEventListener('scroll', function(){
       var y = Math.max(window.scrollY, 0);
-      if (y <= 60) header.classList.remove('is-hidden');
-      else if (y > lastY2 + 5) header.classList.add('is-hidden');
-      else if (y < lastY2 - 5) header.classList.remove('is-hidden');
+      if (y <= 130) header.classList.remove('is-hidden');
+      else if (y > lastY2 + 8) header.classList.add('is-hidden');
+      else if (y < lastY2 - 8) header.classList.remove('is-hidden');
       lastY2 = y;
     }, {passive:true});
   }
@@ -40,7 +42,14 @@
 
   if (toggle && drawer && overlay && closeBtn) {
     var lastFocus = null;
-    var focusables = function(){ return drawer.querySelectorAll('a[href],button:not([disabled])'); };
+    var focusables = function(){
+      // a collapsed services panel is still in the DOM, so skip anything
+      // that is not actually on screen or the tab order runs into nothing
+      return Array.prototype.filter.call(
+        drawer.querySelectorAll('a[href],button:not([disabled])'),
+        function(el){ return el.offsetParent !== null; }
+      );
+    };
     var onKey = function(e){
       if (e.key === 'Escape') { closeDrawer(); return; }
       if (e.key !== 'Tab') return;
@@ -100,6 +109,18 @@
     });
   });
 
+  /* ---- drawer: services disclosure ---- */
+  var accs = document.querySelectorAll('.drawer__acc');
+  Array.prototype.forEach.call(accs, function(btn){
+    btn.addEventListener('click', function(){
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      if (!panel) return;
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      panel.hidden = open;
+    });
+  });
+
   /* ---- hero booking bar -> book page with the choice carried over ---- */
   var bookingBar = document.getElementById('bookingBar');
   if (bookingBar) {
@@ -110,7 +131,8 @@
       var q = [];
       if (svc && svc.value) q.push('service=' + encodeURIComponent(svc.value));
       if (loc && loc.value) q.push('location=' + encodeURIComponent(loc.value));
-      window.location.href = 'book.html' + (q.length ? '?' + q.join('&') : '');
+      var target = bookingBar.getAttribute('action') || 'book/';
+      window.location.href = target + (q.length ? '?' + q.join('&') : '');
     });
   }
 

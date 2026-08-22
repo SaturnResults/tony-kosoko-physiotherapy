@@ -38,9 +38,9 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
-    <a class="brand" href="index.html" aria-label="Tony Kosoko Physiotherapy, home">
-      <img class="brand__mark mark-light" src="assets/logos/logo-mark-white.png" alt="" width="36" height="36">
-      <img class="brand__mark mark-dark" src="assets/logos/logo-mark-teal.png" alt="" width="36" height="36">
+    <a class="brand" href="" aria-label="Tony Kosoko Physiotherapy, home">
+      <img class="brand__mark mark-light" src="assets/logos/logo-mark-white.png" alt="" width="31" height="36">
+      <img class="brand__mark mark-dark" src="assets/logos/logo-mark-teal.png" alt="" width="31" height="36">
       <span class="brand__name"><b>Tony Kosoko</b><span>Physiotherapy</span></span>
     </a>
     <nav class="nav__links" aria-label="Primary">
@@ -48,16 +48,16 @@
           <button type="button" aria-expanded="false">Services
             <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
           </button>
-          <span class="subnav"><a href="services.html"><strong>All services</strong><small>An overview of how I can help</small></a><a href="services-msk.html"><strong>Musculoskeletal Physiotherapy</strong><small>Spine, shoulder, sports and dance</small></a><a href="services-strength.html"><strong>Strength &amp; Conditioning</strong><small>Physiotherapy-led training</small></a><a href="services-mens-health.html"><strong>Men's Health Physiotherapy</strong><small>Chronic pelvic pain</small></a></span>
+          <span class="subnav"><a href="services/"><strong>All services</strong><small>An overview of how I can help</small></a><a href="services-msk/"><strong>Musculoskeletal Physiotherapy</strong><small>Spine, shoulder, sports and dance</small></a><a href="services-strength/"><strong>Strength &amp; Conditioning</strong><small>Physiotherapy-led training</small></a><a href="services-mens-health/"><strong>Men's Health Physiotherapy</strong><small>Chronic pelvic pain</small></a></span>
         </span>
-        <a href="about.html">About</a>
-        <a href="what-to-expect.html">What to Expect</a>
-        <a href="fees.html">Fees</a>
-        <a href="locations.html">Locations</a>
+        <a href="about/">About</a>
+        <a href="what-to-expect/">What to Expect</a>
+        <a href="fees/">Fees</a>
+        <a href="locations/">Locations</a>
     </nav>
     <div class="nav__right">
       <a class="phone" href="tel:+447966264812"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6.6 2.5 4 3.4C3 4.9 3 9 6 13s7.1 5 8.6 4.4l.9-2.6-3.3-1.9-1.4 1.3c-1.2-.6-2.4-1.8-3-3l1.3-1.4L6.6 2.5Z"/></svg>07966 264812</a>
-      <a class="btn btn--teal" href="book.html">Book</a>
+      <a class="btn btn--teal" href="book/">Book</a>
       <button class="nav__toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
@@ -68,25 +68,30 @@
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <aside class="drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
   <div class="drawer__head">
-    <span class="drawer__brand"><img src="assets/logos/logo-mark-white.png" alt="" width="32" height="32"><b>Tony Kosoko</b></span>
+    <span class="drawer__brand"><img src="assets/logos/logo-mark-white.png" alt="" width="28" height="32"><b>Tony Kosoko</b></span>
     <button class="drawer__close" id="drawerClose" type="button" aria-label="Close menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
   </div>
   <nav class="drawer__links" aria-label="Mobile">
-    <p class="drawer__group">Services</p>
-    <a class="sub" href="services-msk.html">Musculoskeletal Physiotherapy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <a class="sub" href="services-strength.html">Strength &amp; Conditioning <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <a class="sub" href="services-mens-health.html">Men's Health Physiotherapy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <a class="sub" href="services.html">All services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <button class="drawer__acc" type="button" aria-expanded="false" aria-controls="drawerServices">
+      <span>Services</span>
+      <svg class="drawer__chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+    </button>
+    <div class="drawer__panel" id="drawerServices" hidden>
+      <a class="sub" href="services-msk/">Musculoskeletal Physiotherapy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="sub" href="services-strength/">Strength &amp; Conditioning <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="sub" href="services-mens-health/">Men's Health Physiotherapy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="sub" href="services/">All services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
     <p class="drawer__group">Practice</p>
-    <a href="about.html">About Tony <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <a href="what-to-expect.html">What to Expect <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <a href="fees.html">Fees &amp; Insurance <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <a href="locations.html">Locations &amp; Contact <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a href="about/">About Tony <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a href="what-to-expect/">What to Expect <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a href="fees/">Fees &amp; Insurance <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a href="locations/">Locations &amp; Contact <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </nav>
   <div class="drawer__foot">
-    <a class="btn btn--teal" href="book.html">Book an Initial Assessment</a>
+    <a class="btn btn--teal" href="book/">Book an Initial Assessment</a>
     <a class="drawer__phone" href="tel:+447966264812"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6.6 2.5 4 3.4C3 4.9 3 9 6 13s7.1 5 8.6 4.4l.9-2.6-3.3-1.9-1.4 1.3c-1.2-.6-2.4-1.8-3-3l1.3-1.4L6.6 2.5Z"/></svg>07966 264812</a>
   </div>
 </aside>
@@ -95,11 +100,11 @@
   <div class="hero__bg" role="img" aria-label="A patient training with a barbell in the gym"></div>
   <div class="hero__scrim"></div>
   <div class="wrap hero__body">
-    <span class="eyebrow"><span class="spark">&#10035;</span> Advanced Musculoskeletal Physiotherapy &middot; Notting Hill</span>
+    <span class="eyebrow"><svg class="spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v18M4.5 7.5l15 9M19.5 7.5l-15 9"/></svg> Advanced Musculoskeletal Physiotherapy &middot; Notting Hill</span>
     <h1>Physiotherapy that starts with listening.</h1>
     <p class="hero__sub">Advanced musculoskeletal physiotherapy in Notting Hill. Over 30 years helping people move, recover and get stronger, one to one from first assessment to lasting strength.</p>
 
-    <form class="booking" id="bookingBar" action="book.html" method="get" aria-label="Book an appointment">
+    <form class="booking" id="bookingBar" action="book/" method="get" aria-label="Book an appointment">
       <div class="booking__field">
         <span class="booking__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3v5a4 4 0 0 0 8 0V3M6 3H4m2 0h2m6 0h2m-2 0h-2M10 16a6 6 0 0 0 6 6 5 5 0 0 0 5-5v-3"/><circle cx="21" cy="11" r="2"/></svg></span>
         <span style="flex:1;text-align:left">
@@ -151,8 +156,8 @@
         <p class="lead">For more than three decades I have helped people recover from injury, manage long-term conditions and build lasting strength. My approach is simple: I listen first. A careful, unhurried history is the most important part of getting your diagnosis right, and the right diagnosis is what leads to the right treatment for you.</p>
         <p class="lead">I am an Advanced Practice Physiotherapist working one to one, so there are no hand-offs and no rushing, just time to do it properly.</p>
         <div class="btn-row" style="margin-top:28px">
-          <a class="btn btn--teal" href="book.html">Book an Initial Assessment</a>
-          <a class="btn btn--outline" href="about.html">Meet Tony</a>
+          <a class="btn btn--teal" href="book/">Book an Initial Assessment</a>
+          <a class="btn btn--outline" href="about/">Meet Tony</a>
         </div>
       </div>
       <div class="split__media reveal"><img class="media-4x3" src="assets/img/intro.jpg" alt="Tony listening to a patient during an assessment" loading="lazy"></div>
@@ -177,7 +182,7 @@
         <div class="svc__body">
           <h3>Musculoskeletal Physiotherapy</h3>
           <p>Expert assessment and treatment for pain and injury, with a special interest in the spine, shoulders and hypermobility.</p>
-          <a class="arrowlink" href="services-msk.html">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="arrowlink" href="services-msk/">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </article>
       <article class="svc reveal">
@@ -185,7 +190,7 @@
         <div class="svc__body">
           <h3>Strength &amp; Conditioning</h3>
           <p>Physiotherapy-led sessions that teach safe, effective training to recover, get stronger and perform.</p>
-          <a class="arrowlink" href="services-strength.html">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="arrowlink" href="services-strength/">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </article>
       <article class="svc reveal">
@@ -193,7 +198,7 @@
         <div class="svc__body">
           <h3>Men's Health Physiotherapy</h3>
           <p>Specialist help for chronic pelvic pain, from a physiotherapist with real understanding and discretion.</p>
-          <a class="arrowlink" href="services-mens-health.html">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="arrowlink" href="services-mens-health/">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </article>
     </div>
@@ -226,7 +231,7 @@
         <p class="lead">My training began not in a clinic but on stage. After an eleven-year career as a professional dancer, I retrained as a physiotherapist, graduating from King's College London in 1995, and brought that understanding of movement with me.</p>
         <p class="lead">Six years in the NHS followed, working alongside specialist consultants in orthopaedics, neurology, spinal surgery and rheumatology. In 2003 I founded The Practice Centre in West London, and today I work one to one as a solo practitioner, recognised by the MACP as an Advanced Practice Physiotherapist.</p>
         <div style="margin-top:26px;display:flex;align-items:center;gap:22px;flex-wrap:wrap">
-          <a class="arrowlink" href="about.html">Read my full story <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="arrowlink" href="about/">Read my full story <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <span style="font-size:13px;color:var(--ink-soft)">BSc (Hons) Physiotherapy &middot; PgCert Sports &middot; MMACP</span>
         </div>
       </div>
@@ -248,7 +253,7 @@
           <h3>The Portobello Clinic</h3>
           <address>12 Raddington Road, London W10 5TG</address>
           <ul class="hours"><li><b>Monday</b><span>8.30 am to 5.00 pm</span></li><li><b>Wednesday</b><span>8.30 am to 5.00 pm</span></li><li><b>Thursday</b><span>2.00 pm to 5.00 pm</span></li></ul>
-          <a class="arrowlink" href="locations.html">Hours &amp; directions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="arrowlink" href="locations/">Hours &amp; directions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </article>
       <article class="loc reveal">
@@ -258,7 +263,7 @@
           <h3>Westway Sports &amp; Fitness Centre</h3>
           <address>1 Crowthorne Road, London W10 6RP</address>
           <ul class="hours"><li><b>Tuesday &amp; Friday</b><span>7.00 am to 1.00 pm</span></li><li><b>Saturday</b><span>8.00 am to 11.00 am</span></li></ul>
-          <a class="arrowlink" href="locations.html">Hours &amp; directions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="arrowlink" href="locations/">Hours &amp; directions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </article>
     </div>
@@ -284,7 +289,7 @@
       <h2 class="h2" style="max-width:20ch">Ready to get to the root of it?</h2>
       <p class="lead" style="text-align:center;margin-inline:auto">Book an initial assessment and let us start with a proper conversation about what is going on.</p>
       <div class="btns">
-        <a class="btn btn--dark btn--lg" href="book.html">Book an Initial Assessment</a>
+        <a class="btn btn--dark btn--lg" href="book/">Book an Initial Assessment</a>
         <a class="btn btn--outline btn--lg" href="tel:+447966264812">Call 07966 264812</a>
       </div>
     </div>
@@ -296,7 +301,7 @@
     <div class="footer__top">
       <div class="footer__brand">
         <div class="footer__mark">
-          <img src="assets/logos/logo-mark-white.png" alt="" width="34" height="34">
+          <img src="assets/logos/logo-mark-white.png" alt="" width="29" height="34">
           <b>Tony Kosoko Physiotherapy</b>
         </div>
         <p>Advanced musculoskeletal physiotherapy and strength and conditioning in Notting Hill, West London.</p>
@@ -310,32 +315,32 @@
       </div>
       <div>
         <h4>Services</h4>
-        <a href="services-msk.html">Musculoskeletal Physio</a>
-        <a href="services-strength.html">Strength &amp; Conditioning</a>
-        <a href="services-mens-health.html">Men's Health</a>
-        <a href="services.html">All services</a>
+        <a href="services-msk/">Musculoskeletal Physio</a>
+        <a href="services-strength/">Strength &amp; Conditioning</a>
+        <a href="services-mens-health/">Men's Health</a>
+        <a href="services/">All services</a>
       </div>
       <div>
         <h4>Practice</h4>
-        <a href="about.html">About Tony</a>
-        <a href="what-to-expect.html">What to Expect</a>
-        <a href="fees.html">Fees &amp; Insurance</a>
-        <a href="book.html">Book an assessment</a>
+        <a href="about/">About Tony</a>
+        <a href="what-to-expect/">What to Expect</a>
+        <a href="fees/">Fees &amp; Insurance</a>
+        <a href="book/">Book an assessment</a>
       </div>
       <div>
         <h4>Contact</h4>
         <a href="tel:+447966264812">07966 264812</a>
         <a href="mailto:info@tonykosokophysiotherapy.com">info@tonykosokophysiotherapy.com</a>
-        <a href="locations.html">The Portobello Clinic, W10</a>
-        <a href="locations.html">Westway Sports &amp; Fitness, W10</a>
+        <a href="locations/">The Portobello Clinic, W10</a>
+        <a href="locations/">Westway Sports &amp; Fitness, W10</a>
       </div>
     </div>
     <div class="footer__bar">
       <span>&copy; <span data-year>2026</span> Tony Kosoko Physiotherapy Ltd &middot; Company No. 17176720 &middot; Registered office: 27D Lancaster Road, London W11 1QJ</span>
       <nav aria-label="Legal">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms &amp; Conditions</a>
-        <a href="cookies.html">Cookie Policy</a>
+        <a href="privacy/">Privacy Policy</a>
+        <a href="terms/">Terms &amp; Conditions</a>
+        <a href="cookies/">Cookie Policy</a>
       </nav>
     </div>
   </div>
@@ -345,6 +350,7 @@
 <!-- Chat widget. Works with no back end; set TK_CHAT_API to the deployed
      endpoint to switch on AI replies, transcripts and counters. -->
 <script>/* window.TK_CHAT_API = 'https://tk-chat-api.vercel.app'; */</script>
+<script>window.TK_BASE='';</script>
 <script src="assets/js/chatbot.js"></script>
 </body>
 </html>
