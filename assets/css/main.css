@@ -83,10 +83,10 @@ h1,h2,h3,h4{margin:0}
   --hd-pill:rgba(255,255,255,.14);--hd-pill-bd:rgba(255,255,255,.32);
   position:fixed;top:0;left:0;right:0;z-index:60;
   padding:14px clamp(12px,3vw,28px);
-  transition:transform .42s cubic-bezier(.4,0,.2,1),opacity .34s ease;
-  will-change:transform,opacity;
+  transition:opacity .34s ease,transform .34s cubic-bezier(.4,0,.2,1);
+  will-change:opacity,transform;
 }
-.site-header.is-hidden{transform:translateY(-130%);opacity:0}
+.site-header.is-hidden{opacity:0;transform:translateY(-10px);pointer-events:none}
 /* while it is leaving, do not let the pill fade to white behind it: that
    flash of a header appearing as it slides away is what reads as glitchy */
 .site-header.is-hidden .header-inner{transition:none}

@@ -5,33 +5,59 @@
 (function(){
   'use strict';
 
-  /* ---- header: solid pill on scroll, hide on scroll down, reveal on scroll up ---- */
+  /* ---- reveal on scroll ---- */
+  /* This runs first on purpose. `.js .reveal` starts at opacity 0, so if any
+     code below were to throw before the observer was attached, every section on
+     the page would stay invisible. Nothing here depends on the rest of the file. */
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.14, rootMargin:'0px 0px -8% 0px'});
+    Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function(el){ io.observe(el); });
+
+    /* Belt and braces. Every section on this site starts at opacity 0 and is
+       revealed by the observer above, so if the observer is throttled or
+       blocked the page renders blank. If anything is still hidden well inside
+       the viewport a moment after load, assume it is not coming and drop the
+       class that hides them, which shows the lot. */
+    window.setTimeout(function(){
+      var vh = window.innerHeight;
+      var stuck = Array.prototype.filter.call(
+        document.querySelectorAll('.reveal:not(.in)'),
+        function(el){ var r = el.getBoundingClientRect(); return r.top < vh * 0.86 && r.bottom > 0; }
+      );
+      if (stuck.length) document.documentElement.classList.remove('js');
+    }, 1500);
+  }
+
+  /* ---- header: solid pill on scroll, hide on scroll down, fade back in ---- */
   var header = document.getElementById('siteHeader');
-  if (header && !header.classList.contains('always-solid')) {
+  if (header) {
+    var alwaysSolid = header.classList.contains('always-solid');
+    var hero = document.querySelector('.hero') || document.querySelector('.page-hero');
     var lastY = Math.max(window.scrollY, 0);
-    // the pill turns solid well before the header is allowed to tuck away, so
-    // it never appears and vanishes in the same gesture
-    var SOLID_AT = 40, HIDE_AT = 130, DELTA = 8;
+    var SOLID_AT = 40, DELTA = 8;
+
+    // The header stays in view for as long as the hero is on screen. It only
+    // starts tucking away once the visitor is into the page proper, so it never
+    // appears and vanishes within the first flick of a scroll.
+    var stayVisibleBelow = function(){
+      return hero ? Math.max(hero.offsetHeight - 90, 130) : 130;
+    };
+
     var updateHeader = function(){
       var y = Math.max(window.scrollY, 0);
-      header.classList.toggle('is-solid', y > SOLID_AT);
-      if (y <= HIDE_AT) header.classList.remove('is-hidden');
+      if (!alwaysSolid) header.classList.toggle('is-solid', y > SOLID_AT);
+      if (y <= stayVisibleBelow()) header.classList.remove('is-hidden');
       else if (y > lastY + DELTA) header.classList.add('is-hidden');
       else if (y < lastY - DELTA) header.classList.remove('is-hidden');
       lastY = y;
     };
     window.addEventListener('scroll', updateHeader, {passive:true});
+    window.addEventListener('resize', updateHeader);
     updateHeader();
-  } else if (header) {
-    // inner pages: pill is always on, but still tuck away when scrolling down
-    var lastY2 = Math.max(window.scrollY, 0);
-    window.addEventListener('scroll', function(){
-      var y = Math.max(window.scrollY, 0);
-      if (y <= 130) header.classList.remove('is-hidden');
-      else if (y > lastY2 + 8) header.classList.add('is-hidden');
-      else if (y < lastY2 - 8) header.classList.remove('is-hidden');
-      lastY2 = y;
-    }, {passive:true});
   }
 
   /* ---- mobile drawer ---- */
@@ -195,16 +221,6 @@
       box.appendChild(iframe);
     });
   });
-
-  /* ---- reveal on scroll ---- */
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
-      });
-    }, {threshold:.14, rootMargin:'0px 0px -8% 0px'});
-    Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function(el){ io.observe(el); });
-  }
 
   /* ---- footer year ---- */
   Array.prototype.forEach.call(document.querySelectorAll('[data-year]'), function(el){
