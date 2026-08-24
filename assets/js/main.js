@@ -215,8 +215,20 @@
     preset('f-service', params.get('service'));
     preset('f-location', params.get('location'));
 
-    /* client-side validation, so nothing is lost to a silent failure */
-    bookForm.addEventListener('submit', function(e){
+    var status = document.getElementById('formStatus');
+    var errorBox = document.getElementById('formError');
+    var submitBtn = bookForm.querySelector('[type="submit"]');
+    var submitLabel = submitBtn ? submitBtn.textContent : '';
+
+    var show = function(box){
+      [status, errorBox].forEach(function(b){ if (b) b.classList.remove('is-visible'); });
+      if (!box) return;
+      box.classList.add('is-visible');
+      box.setAttribute('role', 'status');
+      box.scrollIntoView({behavior:'smooth', block:'center'});
+    };
+
+    var validate = function(){
       var ok = true;
       Array.prototype.forEach.call(bookForm.querySelectorAll('[required]'), function(input){
         var field = input.closest('.field') || input.closest('.check');
@@ -225,17 +237,41 @@
         if (field) field.classList.toggle('has-error', !valid);
         if (!valid && ok) { input.focus(); ok = false; }
       });
-      if (!ok) { e.preventDefault(); return; }
-      /* No back end is wired up yet, so show a confirmation instead of losing the enquiry.
-         TODO [CONFIRM]: point action= at Formspree/Basin/Netlify, then delete this block. */
+      return ok;
+    };
+
+    bookForm.addEventListener('submit', function(e){
       e.preventDefault();
-      var status = document.getElementById('formStatus');
-      if (status) {
-        status.classList.add('is-visible');
-        status.setAttribute('role','status');
-        status.scrollIntoView({behavior:'smooth', block:'center'});
-      }
+      if (!validate()) return;
+
+      /* Spam trap. A person cannot see this field, so if it is filled in the
+         submission is a bot. Behave exactly as if it worked and send nothing. */
+      var trap = bookForm.querySelector('[name="_gotcha"]');
+      if (trap && trap.value) { show(status); bookForm.reset(); return; }
+
+      var endpoint = bookForm.getAttribute('action');
+      /* Never tell someone their enquiry has been sent when it has not. If no
+         endpoint is configured, say so and give them a way to reach Tony. */
+      if (!endpoint || endpoint === '#') { show(errorBox); return; }
+
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending...'; }
+      show(null);
+
+      fetch(endpoint, {
+        method: 'POST',
+        body: new FormData(bookForm),
+        headers: {'Accept': 'application/json'}
+      }).then(function(res){
+        if (!res.ok) throw new Error(res.status);
+        bookForm.reset();
+        show(status);
+      }).catch(function(){
+        show(errorBox);
+      }).then(function(){
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitLabel; }
+      });
     });
+
     Array.prototype.forEach.call(bookForm.querySelectorAll('[required]'), function(input){
       input.addEventListener('input', function(){
         var field = input.closest('.field') || input.closest('.check');

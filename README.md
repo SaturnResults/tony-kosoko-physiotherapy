@@ -63,7 +63,7 @@ Two safety features are load-bearing and should not be removed:
 
 ## Before this goes live
 
-- [ ] **The enquiry form does not submit anywhere.** `book/index.html` has `action="#"` and shows a confirmation message via JavaScript. Point it at a form service (Formspree, Basin, Netlify Forms) or enquiries will be lost.
+- [ ] **Connect the enquiry form.** It is built and tested but has nowhere to post to. Set `FORM_ENDPOINT` at the top of `build_site.py` to the endpoint from whichever form service is used, and rebuild. Until then the form refuses to claim success: it tells the visitor nothing was sent and gives them the phone number. It posts multipart form data and treats any 2xx as success, so Formspree, Basin and Web3Forms all work unchanged.
 - [ ] Confirm the email address. `info@tonykosokophysiotherapy.com` is assumed throughout.
 - [ ] Add the HCPC registration number and MCSP number on `about/index.html`.
 - [ ] Confirm Westway Saturday hours. The source document says 8.00am to 11.00pm, and 11.00am is assumed.

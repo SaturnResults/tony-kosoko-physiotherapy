@@ -108,9 +108,14 @@
   <div class="wrap">
     <div class="split" style="align-items:start">
       <div class="reveal">
-        <form class="form-card" id="bookForm" method="post" action="#" novalidate>
-          <!-- TODO [CONFIRM]: point action= at the chosen form service (Formspree / Basin / Netlify Forms)
-               and remove the JavaScript fallback in assets/js/main.js -->
+        <form class="form-card" id="bookForm" method="post" action="" novalidate>
+          <input type="hidden" name="_subject" value="Website enquiry, Tony Kosoko Physiotherapy">
+          <!-- Spam trap. Positioned off screen and hidden from assistive tech, so a
+               person never sees it and a bot fills it in. Anything with this set is
+               dropped without being sent. -->
+          <div class="hp" aria-hidden="true">
+            <label>Leave this field empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label>
+          </div>
           <div class="field-row">
             <div class="field">
               <label for="f-first">First name<span class="req">*</span></label>
@@ -189,6 +194,11 @@
           <div class="form-status" id="formStatus">
             <strong>Thank you, your request has been sent.</strong><br>
             I will be in touch personally, usually within one working day, to confirm your appointment. If it is urgent, please call 07966 264812.
+          </div>
+          <div class="form-status form-status--error" id="formError">
+            <strong>Sorry, that did not go through.</strong><br>
+            Nothing has been sent. Please call <a href="tel:+447966264812">07966 264812</a> or email
+            <a href="mailto:info@tonykosokophysiotherapy.com">info@tonykosokophysiotherapy.com</a> and I will pick it up from there.
           </div>
           <p class="form-note">Your details are used only to arrange your appointment. See the <a href="../privacy/">Privacy Policy</a>.</p>
         </form>

@@ -320,8 +320,14 @@ h1,h2,h3,h4{margin:0}
 .check input{width:19px;height:19px;flex:0 0 auto;margin-top:2px;accent-color:var(--teal)}
 .form-note{font-size:13px;color:var(--sec-body);margin-top:18px}
 .form-status{margin-top:20px;padding:16px 18px;border-radius:14px;background:var(--teal-wash);color:#0A3F3A;font-size:14.5px;display:none}
+.form-status--error{background:#FBEDEA;color:#7A2E1E;border:1px solid rgba(198,83,63,.3)}
+.form-status--error a{color:#7A2E1E;text-decoration:underline;text-underline-offset:2px;font-weight:600}
+/* spam trap: off screen for people, still fillable by a bot */
+.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 .form-status.is-visible{display:block}
 .section:not(.section--light) .form-status{background:rgba(69,214,196,.14);color:#CFF5EE}
+.section:not(.section--light) .form-status--error{background:rgba(198,83,63,.16);color:#F6CFC6;border-color:rgba(198,83,63,.4)}
+.section:not(.section--light) .form-status--error a{color:#F6CFC6}
 .field.has-error input,.field.has-error select,.field.has-error textarea{border-color:#C6533F;box-shadow:0 0 0 3px rgba(198,83,63,.14)}
 .err{display:none;font-size:12.5px;color:#C6533F;margin-top:6px;font-weight:500}
 .section:not(.section--light) .err{color:#F0A08E}
