@@ -449,6 +449,7 @@ body.no-scroll{overflow:hidden}
 }
 @media (prefers-reduced-motion:reduce){
   .hero__bg{animation:none;transform:scale(1.02)}
+  .tkc-launch::before{animation:none;opacity:0}
   html{scroll-behavior:auto}
   .js .reveal{opacity:1;transform:none}
   .btn,.svc,.svc__img img,.site-header,.drawer,.drawer-overlay,.subnav{transition:none}
@@ -468,6 +469,18 @@ body.no-scroll{overflow:hidden}
   transition:transform .18s ease,background .2s ease,opacity .2s ease;
 }
 .tkc-launch:hover{background:#0d7f75;transform:translateY(-2px)}
+/* A ring that swells out of the button every few seconds, so it reads as
+   something you can talk to rather than another button on the page. It sits
+   behind the button and is never in the way of a tap. */
+.tkc-launch::before{content:"";position:absolute;inset:0;border-radius:inherit;
+  background:var(--teal-bright);opacity:0;z-index:-1;pointer-events:none;
+  animation:tkcPulse 3.4s cubic-bezier(.25,.6,.35,1) infinite}
+.tkc-launch:hover::before,.tkc-launch.tkc-hide::before{animation-play-state:paused;opacity:0}
+@keyframes tkcPulse{
+  0%   {transform:scale(1);opacity:.5}
+  70%  {transform:scale(1.28);opacity:0}
+  100% {transform:scale(1.28);opacity:0}
+}
 .tkc-launch svg{width:17px;height:17px}
 .tkc-launch.tkc-hide{opacity:0;pointer-events:none;transform:translateY(8px)}
 body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
@@ -490,7 +503,7 @@ body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
 .tkc-panel.tkc-open{opacity:1;visibility:visible;transform:none;transition:opacity .26s ease,transform .26s ease,visibility 0s}
 
 .tkc-head{background:var(--charcoal);color:#fff;padding:16px 16px 14px 20px;display:flex;align-items:flex-start;gap:12px}
-.tkc-head__mark{width:34px;height:34px;flex:0 0 auto}
+.tkc-head__mark{width:auto;height:34px;flex:0 0 auto}
 .tkc-head__txt{flex:1;min-width:0}
 .tkc-head__txt b{display:block;font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:16.5px;line-height:1.2}
 .tkc-head__txt span{display:block;font-size:11.5px;color:rgba(232,238,238,.66);margin-top:3px;line-height:1.35}
@@ -573,4 +586,12 @@ body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
 @media (prefers-reduced-motion:reduce){
   .tkc-panel,.tkc-msg,.tkc-launch{transition:none}
   .tkc-typing span{animation:none}
+}
+
+@media (max-width:620px){
+  /* iOS Safari zooms the whole page in when you focus a field smaller than
+     16px, and does not zoom back out afterwards. Nothing else fixes this: it
+     has to be 16px on anything focusable. */
+  .field input[type=text],.field input[type=email],.field input[type=tel],
+  .field select,.field textarea,.booking select,.tkc-input{font-size:16px}
 }
