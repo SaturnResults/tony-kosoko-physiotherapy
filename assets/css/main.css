@@ -449,7 +449,7 @@ body.no-scroll{overflow:hidden}
 }
 @media (prefers-reduced-motion:reduce){
   .hero__bg{animation:none;transform:scale(1.02)}
-  .tkc-launch::before{animation:none;opacity:0}
+  .tkc-launch::before{animation:none;opacity:0}   /* keep the dot, drop the ping */
   html{scroll-behavior:auto}
   .js .reveal{opacity:1;transform:none}
   .btn,.svc,.svc__img img,.site-header,.drawer,.drawer-overlay,.subnav{transition:none}
@@ -469,17 +469,18 @@ body.no-scroll{overflow:hidden}
   transition:transform .18s ease,background .2s ease,opacity .2s ease;
 }
 .tkc-launch:hover{background:#0d7f75;transform:translateY(-2px)}
-/* A ring that swells out of the button every few seconds, so it reads as
-   something you can talk to rather than another button on the page. It sits
-   behind the button and is never in the way of a tap. */
-.tkc-launch::before{content:"";position:absolute;inset:0;border-radius:inherit;
-  background:var(--teal-bright);opacity:0;z-index:-1;pointer-events:none;
-  animation:tkcPulse 3.4s cubic-bezier(.25,.6,.35,1) infinite}
-.tkc-launch:hover::before,.tkc-launch.tkc-hide::before{animation-play-state:paused;opacity:0}
-@keyframes tkcPulse{
-  0%   {transform:scale(1);opacity:.5}
-  70%  {transform:scale(1.28);opacity:0}
-  100% {transform:scale(1.28);opacity:0}
+/* An online dot on the top-right corner, so the launcher reads as someone
+   there to answer rather than another button. ::after is the dot itself,
+   ::before is the halo that pings out from behind it. */
+.tkc-launch::before,
+.tkc-launch::after{content:"";position:absolute;top:-4px;right:-4px;
+  width:16px;height:16px;border-radius:50%;background:#5BD98A;pointer-events:none}
+.tkc-launch::before{animation:tkcPing 2.6s cubic-bezier(0,0,.2,1) infinite}
+.tkc-launch::after{border:2.5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.22)}
+@keyframes tkcPing{
+  0%   {transform:scale(1);opacity:.7}
+  70%  {transform:scale(2.2);opacity:0}
+  100% {transform:scale(2.2);opacity:0}
 }
 .tkc-launch svg{width:17px;height:17px}
 .tkc-launch.tkc-hide{opacity:0;pointer-events:none;transform:translateY(8px)}
