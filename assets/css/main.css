@@ -484,7 +484,7 @@ body.no-scroll{overflow:hidden}
   background:var(--teal);color:#fff;border:0;cursor:pointer;
   padding:13px 20px;border-radius:var(--radius);
   font-family:"Work Sans",sans-serif;font-size:14.5px;font-weight:600;
-  box-shadow:0 14px 34px -12px rgba(0,0,0,.55);
+  box-shadow:0 6px 18px -8px rgba(0,0,0,.32);
   transition:transform .18s ease,background .2s ease,opacity .2s ease;
 }
 .tkc-launch:hover{background:#0d7f75;transform:translateY(-2px)}
@@ -517,6 +517,7 @@ body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
 }
 
 .tkc-panel{
+  overscroll-behavior:contain;
   position:fixed;right:22px;bottom:22px;z-index:91;
   width:min(390px,calc(100vw - 44px));height:min(600px,calc(100dvh - 120px));
   background:var(--off-white);border-radius:22px;overflow:hidden;
@@ -536,7 +537,15 @@ body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
 .tkc-close:hover{background:rgba(255,255,255,.22)}
 .tkc-close svg{width:15px;height:15px}
 
-.tkc-body{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px}
+.tkc-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding:18px 16px;display:flex;flex-direction:column;gap:12px}
+/* min-height:0 is load-bearing. A flex item will not shrink below its own
+   content without it, so when the keyboard shortened the panel the messages
+   overflowed and sat under the chips instead of scrolling. overscroll-behavior
+   stops a scroll at the end of the messages carrying on into the page. */
+/* with the keyboard up there is no room for suggested questions, and anyone
+   typing has already decided not to use them */
+.tkc-panel.tkc-compact .tkc-chips{display:none}
 .tkc-msg{display:flex;gap:9px;max-width:100%;opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease}
 .tkc-msg.tkc-in{opacity:1;transform:none}
 .tkc-msg--user{justify-content:flex-end}
@@ -605,7 +614,11 @@ body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
 
 @media (max-width:520px){
   .tkc-launch{right:14px;bottom:14px;padding:12px 18px}
-  .tkc-panel{right:0;bottom:0;width:100vw;height:100dvh;border-radius:0}
+  .tkc-panel{right:0;bottom:0;width:100vw;height:100dvh;border-radius:0;
+    /* a spread shadow in the panel's own colour, so anything outside its box
+       is covered too. iOS can shift a fixed element while the keyboard opens,
+       and this means such a shift reveals more panel, never the page. */
+    box-shadow:0 0 0 100vmax var(--off-white)}
   .tkc-panel.tkc-open{transform:none}
 }
 @media (prefers-reduced-motion:reduce){

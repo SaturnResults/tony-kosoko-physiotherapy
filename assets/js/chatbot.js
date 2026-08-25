@@ -352,6 +352,10 @@
 
   /* ── Consent gate ─────────────────────────────────────────────────────── */
   function showConsent() {
+    /* open, close without answering, open again: without this a second
+       gate is built on top of the first, and answering only removes one.
+       The orphan then sits in the layout stealing space for good. */
+    if (consentPane) return;
     consentPane = el('div', 'tkc-consent');
     consentPane.innerHTML =
       '<h3>Before we start</h3>' +
@@ -453,7 +457,7 @@
     var vv = window.visualViewport;
     var open = panel && panel.classList.contains('tkc-open');
     if (!open || !isPhone()) {
-      if (panel) { panel.style.height = ''; panel.style.top = ''; panel.style.bottom = ''; }
+      if (panel) { panel.style.height = ''; panel.style.top = ''; panel.style.bottom = ''; panel.classList.remove('tkc-compact'); }
       if (!open) unlockPage();
       return;
     }
@@ -461,6 +465,9 @@
     panel.style.height = vv.height + 'px';
     panel.style.top = vv.offsetTop + 'px';
     panel.style.bottom = 'auto';
+    /* Short panel means the keyboard is up. Drop the suggested questions so the
+       conversation keeps as much of the remaining room as possible. */
+    panel.classList.toggle('tkc-compact', vv.height < 560);
   }
 
   /* ── Mount ───────────────────────────────────────────────────────────── */
