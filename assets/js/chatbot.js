@@ -399,6 +399,7 @@
     launcher.classList.add('tkc-hide');
     launcher.setAttribute('aria-expanded', 'true');
     track('chat_opened');
+    fitToViewport();
     if (!started) showConsent();
     else setTimeout(function () { input.focus(); }, 280);
     document.addEventListener('keydown', onKey);
@@ -410,12 +411,36 @@
     launcher.classList.remove('tkc-hide');
     launcher.setAttribute('aria-expanded', 'false');
     document.removeEventListener('keydown', onKey);
+    panel.style.height = ''; panel.style.top = ''; panel.style.bottom = '';
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
   function onKey(e) { if (e.key === 'Escape') close(); }
 
+  /* iOS keyboard. A position:fixed panel is laid out against the layout
+     viewport, which does not shrink when the keyboard appears, and Safari
+     shunts the page up to reveal the focused field. The panel goes with it and
+     a strip of the page shows through underneath. visualViewport is the only
+     thing that reports the actual visible area, so on a phone the panel is
+     pinned to it explicitly while the keyboard is open. */
+  function fitToViewport() {
+    var vv = window.visualViewport;
+    if (!vv) return;
+    if (window.innerWidth > 520 || !panel.classList.contains('tkc-open')) {
+      panel.style.height = ''; panel.style.top = ''; panel.style.bottom = '';
+      return;
+    }
+    panel.style.height = vv.height + 'px';
+    panel.style.top = vv.offsetTop + 'px';
+    panel.style.bottom = 'auto';
+  }
+
   /* ── Mount ───────────────────────────────────────────────────────────── */
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', fitToViewport);
+    window.visualViewport.addEventListener('scroll', fitToViewport);
+  }
+
   function mount() {
     launcher = el('button', 'tkc-launch',
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2Z"/></svg>Ask a question');
