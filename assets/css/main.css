@@ -473,14 +473,19 @@ body.no-scroll{overflow:hidden}
    there to answer rather than another button. ::after is the dot itself,
    ::before is the halo that pings out from behind it. */
 .tkc-launch::before,
-.tkc-launch::after{content:"";position:absolute;top:-4px;right:-4px;
-  width:16px;height:16px;border-radius:50%;background:#5BD98A;pointer-events:none}
-.tkc-launch::before{animation:tkcPing 2.6s cubic-bezier(0,0,.2,1) infinite}
-.tkc-launch::after{border:2.5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.22)}
+.tkc-launch::after{content:"";position:absolute;top:-3px;right:-3px;
+  width:12px;height:12px;border-radius:50%;background:#5BD98A;pointer-events:none}
+/* The ping carries the same 2px border as the dot, but transparent, and clips
+   its background to the padding box. That makes the green it paints exactly
+   the size and position of the dot's green centre, so it radiates from the dot
+   rather than starting out wider than it. */
+.tkc-launch::before{border:2px solid transparent;background-clip:padding-box;
+  animation:tkcPing 2.6s cubic-bezier(0,0,.2,1) infinite}
+.tkc-launch::after{border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 @keyframes tkcPing{
-  0%   {transform:scale(1);opacity:.7}
-  70%  {transform:scale(2.2);opacity:0}
-  100% {transform:scale(2.2);opacity:0}
+  0%   {transform:scale(1);opacity:.65}
+  70%  {transform:scale(2.6);opacity:0}
+  100% {transform:scale(2.6);opacity:0}
 }
 .tkc-launch svg{width:17px;height:17px}
 .tkc-launch.tkc-hide{opacity:0;pointer-events:none;transform:translateY(8px)}

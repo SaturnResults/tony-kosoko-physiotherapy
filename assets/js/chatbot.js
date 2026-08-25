@@ -399,6 +399,7 @@
     launcher.classList.add('tkc-hide');
     launcher.setAttribute('aria-expanded', 'true');
     track('chat_opened');
+    lockPage();
     fitToViewport();
     if (!started) showConsent();
     else setTimeout(function () { input.focus(); }, 280);
@@ -412,24 +413,51 @@
     launcher.setAttribute('aria-expanded', 'false');
     document.removeEventListener('keydown', onKey);
     panel.style.height = ''; panel.style.top = ''; panel.style.bottom = '';
+    unlockPage();
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
   function onKey(e) { if (e.key === 'Escape') close(); }
 
-  /* iOS keyboard. A position:fixed panel is laid out against the layout
-     viewport, which does not shrink when the keyboard appears, and Safari
-     shunts the page up to reveal the focused field. The panel goes with it and
-     a strip of the page shows through underneath. visualViewport is the only
-     thing that reports the actual visible area, so on a phone the panel is
-     pinned to it explicitly while the keyboard is open. */
+  /* Two things are needed to stop the page showing through the panel on a
+     phone, and doing only one of them is not enough.
+
+     First, freeze the page. Left alone, Safari scrolls the document to bring
+     the focused field into view and drags fixed elements around with it, so
+     the panel slides off the screen and the page appears above and below it.
+     Fixing the body at its current offset stops that happening at all.
+
+     Second, size the panel to the visual viewport. The layout viewport does
+     not shrink when the keyboard opens, so a full height panel would sit
+     behind the keyboard with its input out of reach. visualViewport is the
+     only thing that reports the area actually visible. */
+  var lockedY = 0;
+  var isPhone = function(){ return window.innerWidth <= 520; };
+
+  function lockPage() {
+    if (!isPhone() || document.body.style.position === 'fixed') return;
+    lockedY = window.scrollY || window.pageYOffset || 0;
+    var b = document.body.style;
+    b.position = 'fixed'; b.top = (-lockedY) + 'px';
+    b.left = '0'; b.right = '0'; b.width = '100%';
+  }
+
+  function unlockPage() {
+    if (document.body.style.position !== 'fixed') return;
+    var b = document.body.style;
+    b.position = ''; b.top = ''; b.left = ''; b.right = ''; b.width = '';
+    window.scrollTo(0, lockedY);
+  }
+
   function fitToViewport() {
     var vv = window.visualViewport;
-    if (!vv) return;
-    if (window.innerWidth > 520 || !panel.classList.contains('tkc-open')) {
-      panel.style.height = ''; panel.style.top = ''; panel.style.bottom = '';
+    var open = panel && panel.classList.contains('tkc-open');
+    if (!open || !isPhone()) {
+      if (panel) { panel.style.height = ''; panel.style.top = ''; panel.style.bottom = ''; }
+      if (!open) unlockPage();
       return;
     }
+    if (!vv) return;
     panel.style.height = vv.height + 'px';
     panel.style.top = vv.offsetTop + 'px';
     panel.style.bottom = 'auto';
@@ -440,6 +468,7 @@
     window.visualViewport.addEventListener('resize', fitToViewport);
     window.visualViewport.addEventListener('scroll', fitToViewport);
   }
+  window.addEventListener('resize', fitToViewport);
 
   function mount() {
     launcher = el('button', 'tkc-launch',
