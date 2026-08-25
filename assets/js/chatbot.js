@@ -357,18 +357,23 @@
        The orphan then sits in the layout stealing space for good. */
     if (consentPane) return;
     consentPane = el('div', 'tkc-consent');
+    /* NOTHING IS STORED while the back end runs without POSTGRES_URL, so this
+       screen must not offer a save/do-not-save choice: promising a visitor that
+       Tony will follow up on a conversation nobody keeps would leave someone
+       waiting for a call that cannot come. To restore the two button consent
+       gate when transcripts go live, put back the 'Chat without saving' button
+       calling begin(false) and make this one begin(true). */
     consentPane.innerHTML =
       '<h3>Before we start</h3>' +
-      '<p>This chat can answer questions about fees, times, locations and booking. It is not able to give medical advice.</p>' +
-      '<p>If you choose <strong>Start chat</strong>, the conversation is saved so Tony can follow up and improve the service. ' +
-      'You can ask for it to be deleted at any time. See the <a href="' + BASE + 'privacy/">Privacy Policy</a>.</p>';
+      '<p>This chat answers questions about fees, times, locations and booking. It cannot give medical advice, ' +
+      'and nobody is reading it: Tony is not notified and will not see what you type.</p>' +
+      '<p>Your messages are not saved. They are sent to our AI provider to write the reply, and nothing is kept ' +
+      'once you close this window. See the <a href="' + BASE + 'privacy/">Privacy Policy</a>.</p>';
     var btns = el('div', 'tkc-btns');
     var yes = el('button', 'tkc-btn tkc-btn--primary', 'Start chat');
-    var no  = el('button', 'tkc-btn tkc-btn--quiet', 'Chat without saving');
-    yes.type = no.type = 'button';
-    yes.addEventListener('click', function () { begin(true); });
-    no.addEventListener('click',  function () { begin(false); });
-    btns.appendChild(yes); btns.appendChild(no);
+    yes.type = 'button';
+    yes.addEventListener('click', function () { begin(false); });
+    btns.appendChild(yes);
     consentPane.appendChild(btns);
     panel.insertBefore(consentPane, foot);
     // the empty message area also claims flex:1, which squeezes the gate
