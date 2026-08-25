@@ -43,7 +43,13 @@ h1,h2,h3,h4{margin:0}
 }
 .section--light{--sec-bg:var(--off-white);--sec-ink:var(--ink);--sec-body:var(--ink-soft);--sec-card:var(--white);--sec-border:var(--line);--kicker:var(--teal)}
 .section--teal{--sec-bg:var(--teal-deep);--sec-ink:#fff;--sec-body:rgba(255,255,255,.9);--sec-border:rgba(255,255,255,.32);--kicker:rgba(255,255,255,.88);padding-block:clamp(40px,6vw,66px)}
-.section--cta{--sec-bg:linear-gradient(120deg,#0A645D,#14958A 60%,#0B6E66);--sec-ink:#fff;--sec-body:rgba(255,255,255,.9);--kicker:rgba(255,255,255,.85)}
+.section--cta{--sec-bg:linear-gradient(150deg,#07514B 0%,#0F7E74 45%,#12907F 70%,#08574F 100%);--sec-ink:#fff;--sec-body:rgba(255,255,255,.86);--kicker:rgba(255,255,255,.7);position:relative;overflow:hidden}
+/* a soft light from the upper right, and a vignette, so the band has some
+   depth to it instead of reading as one flat sweep of colour */
+.section--cta::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 78% 8%,rgba(255,255,255,.16),transparent 55%),
+             radial-gradient(100% 100% at 50% 120%,rgba(0,0,0,.28),transparent 60%)}
+.section--cta > *{position:relative;z-index:1}
 .section--tight{padding-block:clamp(48px,6vw,80px)}
 /* The section directly after the hero sits under the accreditation band, so it
    needs less breathing room above it than a section following a full section. */
@@ -52,6 +58,9 @@ h1,h2,h3,h4{margin:0}
 .kicker{font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--kicker);font-weight:600;margin:0 0 16px;display:flex;align-items:center;gap:10px}
 .kicker::before{content:"";width:26px;height:1.5px;background:currentColor;opacity:.6}
 .kicker.center{justify-content:center}
+/* centred kickers get a matching rule on the right, otherwise the single
+   left-hand line throws the whole thing off axis */
+.kicker.center::after{content:"";width:26px;height:1.5px;background:currentColor;opacity:.6}
 .h2{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:clamp(1.9rem,3.7vw,3rem);line-height:1.08;letter-spacing:-.01em;color:var(--sec-ink);text-wrap:balance}
 .h3{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:clamp(1.35rem,2.2vw,1.75rem);line-height:1.15;color:var(--sec-ink)}
 .lead{color:var(--sec-body);font-size:clamp(1rem,1.3vw,1.15rem);line-height:1.65;margin:18px 0 0;max-width:60ch}
@@ -65,6 +74,8 @@ h1,h2,h3,h4{margin:0}
 .btn--bright{background:var(--teal-bright);color:#0A2320;border-color:var(--teal-bright)}
 .btn--bright:hover{background:#5ee2d1;transform:translateY(-1px)}
 .btn--dark{background:var(--charcoal);color:#fff;border-color:var(--charcoal)}
+.btn--light{background:#fff;color:var(--teal-deep);border-color:#fff}
+.btn--light:hover{background:#EAF3F1;transform:translateY(-1px);box-shadow:0 14px 30px -14px rgba(0,0,0,.5)}
 .btn--dark:hover{background:#2b3134;transform:translateY(-1px)}
 .btn--ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.4)}
 .btn--ghost:hover{background:rgba(255,255,255,.18)}
@@ -298,7 +309,15 @@ h1,h2,h3,h4{margin:0}
 .quote figcaption{font-size:.95rem;color:var(--sec-body);font-weight:500}
 .quote .conf{font-size:12px;color:var(--teal);display:block;margin-top:8px;font-style:italic}
 
-.cta-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px}
+.section--cta{padding-block:clamp(84px,11vw,150px)}
+.cta-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
+/* larger and unconstrained, so it sits on one line where it fits rather than
+   being forced to wrap by a 20ch cap */
+.cta-wrap__title{font-family:"Newsreader",Georgia,serif;font-weight:500;
+  font-size:clamp(2.1rem,4.4vw,3.5rem);line-height:1.04;letter-spacing:-.015em;
+  color:var(--sec-ink);max-width:22ch;text-wrap:balance;margin:0 0 18px}
+.cta-wrap__body{font-size:clamp(1rem,1.35vw,1.14rem);line-height:1.6;color:var(--sec-body);
+  max-width:52ch;margin:0 0 32px}
 .cta-wrap .btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
 
 /* ---------------- forms ---------------- */
