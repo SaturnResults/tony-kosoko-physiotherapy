@@ -69,7 +69,10 @@ Two safety features are load-bearing and should not be removed:
 - [ ] Confirm Westway Saturday hours. The source document says 8.00am to 11.00pm, and 11.00am is assumed.
 - [ ] Replace the placeholder testimonial on the home page. It is currently labelled as a placeholder.
 - [ ] Confirm strength and conditioning session pricing, and accepted payment methods, on `fees/index.html`.
-- [ ] **Have the legal pages reviewed.** `privacy/`, `terms/` and `cookies/` are drafts and say so on the page. The privacy policy covers clinical records as special category health data and should be read by Tony, and ideally by a data protection adviser, before publication.
+- [ ] **Legal pages.** The privacy policy and terms are now Tony's own documents, supplied 2026-08-24. Each page carries an "About this page" note explaining which parts are his. Two things still need him:
+  - the **Using this website** and **Your rights** sections of the privacy policy were written for the build, because his policy predates the site and does not mention the enquiry form, the chat assistant or the maps. His policy also has no data subject rights section, which UK GDPR requires.
+  - his documents are written for a multi-person clinic ("we", "our practitioners", "admin staff within the clinic") while the rest of the site says he works alone. They also carry a Westway letterhead and were last reviewed May 2022.
+- [ ] **The cookie policy is still a draft** and says so on the page.
 
 Every outstanding item is also marked with a `[CONFIRM]` comment in the HTML:
 
