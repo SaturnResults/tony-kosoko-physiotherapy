@@ -2,7 +2,7 @@
 
 The website for Tony Kosoko Physiotherapy Ltd, an advanced musculoskeletal physiotherapy practice in Notting Hill, West London.
 
-Thirteen static pages. No build step, no framework, no dependencies.
+Twelve static pages. No build step, no framework, no dependencies.
 
 ## Running it locally
 
@@ -72,7 +72,6 @@ Two safety features are load-bearing and should not be removed:
 - [ ] **Legal pages.** The privacy policy and terms are now Tony's own documents, supplied 2026-08-24. Each page carries an "About this page" note explaining which parts are his. Two things still need him:
   - the **Using this website** and **Your rights** sections of the privacy policy were written for the build, because his policy predates the site and does not mention the enquiry form, the chat assistant or the maps. His policy also has no data subject rights section, which UK GDPR requires.
   - his documents are written for a multi-person clinic ("we", "our practitioners", "admin staff within the clinic") while the rest of the site says he works alone. They also carry a Westway letterhead and were last reviewed May 2022.
-- [ ] **The cookie policy is still a draft** and says so on the page.
 
 Every outstanding item is also marked with a `[CONFIRM]` comment in the HTML:
 
