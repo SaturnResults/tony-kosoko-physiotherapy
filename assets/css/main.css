@@ -53,7 +53,7 @@ h1,h2,h3,h4{margin:0}
 .section--tight{padding-block:clamp(48px,6vw,80px)}
 /* The section directly after the hero sits under the accreditation band, so it
    needs less breathing room above it than a section following a full section. */
-.hero + .section{padding-top:clamp(54px,7.65vw,102px)}
+.hero + .section{padding-top:clamp(43px,6.12vw,82px)}
 
 .kicker{font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--kicker);font-weight:600;margin:0 0 16px;display:flex;align-items:center;gap:10px}
 .kicker::before{content:"";width:26px;height:1.5px;background:currentColor;opacity:.6}
@@ -176,7 +176,7 @@ h1,h2,h3,h4{margin:0}
    hero, so the photo stays visible around its top corners. Dark logo variants
    are used here; the white ones are kept for the dark footer. */
 .trust{position:relative;z-index:2;background:var(--off-white);border-radius:34px 34px 0 0}
-.trust__inner{display:flex;align-items:center;justify-content:center;padding-block:26px}
+.trust__inner{display:flex;align-items:center;justify-content:center;padding-block:26px 21px}
 .trust__logos{display:flex;align-items:center;justify-content:center;gap:clamp(20px,3.2vw,48px);flex-wrap:wrap}
 .trust__logos img{height:40px;width:auto;opacity:.68;filter:saturate(0)}
 .trust__logos img.csp{height:52px}   /* tall marquise seal */
