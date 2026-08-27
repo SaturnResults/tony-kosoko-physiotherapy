@@ -301,3 +301,177 @@
     el.textContent = new Date().getFullYear();
   });
 })();
+
+/* ==========================================================================
+   Booking bar dropdowns
+   The native <select> stays in the DOM and keeps its name and value, so the
+   bar still submits correctly and still works with JavaScript off. All this
+   does is hide it and build a styled listbox alongside.
+
+   Focus stays on the trigger the whole time and the active row is announced
+   through aria-activedescendant, which is the standard listbox pattern and
+   avoids moving focus into the menu.
+   ========================================================================== */
+(function () {
+  var selects = document.querySelectorAll('.booking select');
+  if (!selects.length) return;
+
+  var CHEV = '<svg class="bk-chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M2 4.5l4 4 4-4"/></svg>';
+
+  var openOne = null;
+  function closeOpen() { if (openOne) openOne(); }
+
+  Array.prototype.forEach.call(selects, function (select, n) {
+    var host = select.parentNode;
+    if (!host) return;
+    host.classList.add('bk-sel');
+
+    var base = 'bk' + n;
+    var label = host.querySelector('label');
+
+    /* Placeholder is the option with an empty value. It heads the trigger but
+       is deliberately not a row: there is nothing to go back to. */
+    var placeholder = '';
+    var rows = [];
+    Array.prototype.forEach.call(select.options, function (o) {
+      if (o.value === '') placeholder = o.text; else rows.push(o);
+    });
+    if (!rows.length) return;
+
+    var trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'bk-trigger';
+    trigger.id = base + 'T';
+    trigger.setAttribute('aria-haspopup', 'listbox');
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.setAttribute('aria-controls', base + 'M');
+    trigger.innerHTML = '<span class="bk-value"></span>' + CHEV;
+    /* button is a labelable element, so the existing label can point at it.
+       The select is display:none and therefore out of the accessibility tree. */
+    if (label) label.setAttribute('for', trigger.id);
+
+    var menu = document.createElement('div');
+    menu.className = 'bk-menu';
+    menu.id = base + 'M';
+    menu.setAttribute('role', 'listbox');
+    if (label) menu.setAttribute('aria-label', label.textContent);
+
+    var value = trigger.firstChild;
+    var active = -1;
+
+    rows.forEach(function (o, i) {
+      var row = document.createElement('div');
+      row.className = 'bk-opt';
+      row.id = base + 'o' + i;
+      row.setAttribute('role', 'option');
+      row.innerHTML = '<span class="bk-radio" aria-hidden="true"></span><span></span>';
+      row.lastChild.textContent = o.text;
+      row.addEventListener('click', function (e) {
+        e.stopPropagation();
+        choose(i);
+        close();
+        trigger.focus();
+      });
+      row.addEventListener('mousemove', function () {
+        menu.classList.remove('is-kbd');
+        setActive(i, false);
+      });
+      menu.appendChild(row);
+    });
+
+    function render() {
+      var chosen = -1;
+      rows.forEach(function (o, i) {
+        var on = o.value === select.value;
+        if (on) chosen = i;
+        menu.children[i].setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      value.textContent = chosen < 0 ? placeholder : rows[chosen].text;
+      trigger.classList.toggle('is-placeholder', chosen < 0);
+      return chosen;
+    }
+
+    function choose(i) {
+      select.value = rows[i].value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      render();
+    }
+
+    function setActive(i, scroll) {
+      if (active > -1 && menu.children[active]) menu.children[active].classList.remove('is-active');
+      active = i;
+      if (i < 0) { trigger.removeAttribute('aria-activedescendant'); return; }
+      var row = menu.children[i];
+      row.classList.add('is-active');
+      trigger.setAttribute('aria-activedescendant', row.id);
+      if (scroll !== false && row.scrollIntoView) row.scrollIntoView({ block: 'nearest' });
+    }
+
+    function open() {
+      if (openOne) closeOpen();
+      /* Opens upwards by default because the home hero clips its overflow and
+         the bar sits low in it. Only drop down when there is genuinely room. */
+      var box = trigger.getBoundingClientRect();
+      var needed = Math.min(rows.length * 48 + 24, 320);
+      menu.classList.toggle('bk-menu--down',
+        box.bottom + needed + 24 <= window.innerHeight && box.top < needed + 24);
+      menu.classList.add('is-open');
+      menu.classList.remove('is-kbd');
+      trigger.setAttribute('aria-expanded', 'true');
+      openOne = close;
+      var chosen = render();
+      setActive(chosen < 0 ? 0 : chosen);
+    }
+
+    function close() {
+      menu.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      setActive(-1);
+      if (openOne === close) openOne = null;
+    }
+
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (menu.classList.contains('is-open')) close(); else open();
+    });
+
+    trigger.addEventListener('keydown', function (e) {
+      var isOpen = menu.classList.contains('is-open');
+      var k = e.key;
+      if (k === 'ArrowDown' || k === 'ArrowUp') {
+        e.preventDefault();
+        if (!isOpen) { open(); menu.classList.add('is-kbd'); return; }
+        menu.classList.add('is-kbd');
+        var next = active + (k === 'ArrowDown' ? 1 : -1);
+        setActive(next < 0 ? rows.length - 1 : next >= rows.length ? 0 : next);
+      } else if (k === 'Enter' || k === ' ' || k === 'Spacebar') {
+        e.preventDefault();
+        if (!isOpen) open();
+        else if (active > -1) { choose(active); close(); }
+      } else if (k === 'Escape' && isOpen) {
+        e.preventDefault();
+        close();
+      } else if (k === 'Home' && isOpen) { e.preventDefault(); menu.classList.add('is-kbd'); setActive(0); }
+      else if (k === 'End' && isOpen) { e.preventDefault(); menu.classList.add('is-kbd'); setActive(rows.length - 1); }
+      else if (k === 'Tab' && isOpen) { close(); }
+    });
+
+    host.appendChild(trigger);
+    host.appendChild(menu);
+    render();
+  });
+
+  document.addEventListener('click', closeOpen);
+
+  /* Close on a real resize, but only when the WIDTH changes. Mobile browsers
+     fire resize every time the address bar collapses or expands on scroll, and
+     closing the menu on that would make it snap shut under the user's thumb. */
+  var lastW = window.innerWidth;
+  window.addEventListener('resize', function () {
+    if (window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
+    closeOpen();
+  });
+})();
