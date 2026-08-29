@@ -697,6 +697,26 @@ body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
   .bk-chev{transition:none}
 }
 
+/* ---------------- testimonials ----------------
+   One featured pull quote, then a grid of shorter ones. .tcard sits on top of
+   .vcard so it inherits the card shell and only overrides what differs. */
+.thead{max-width:60ch;margin-inline:auto;text-align:center}
+.quote + .tgrid{margin-top:56px}
+.thead + .quote{margin-top:44px}
+.tcard{display:flex;flex-direction:column;gap:14px;margin:0}
+.tcard blockquote{margin:0;font-size:.97rem;line-height:1.6;color:var(--sec-body)}
+.tcard blockquote::before{content:"\201C"}
+.tcard blockquote::after{content:"\201D"}
+/* figcaption is pushed to the bottom so attributions line up across a row
+   even when the quotes are different lengths. */
+.tcard figcaption{margin-top:auto;font-size:.92rem;font-weight:600;color:var(--sec-ink)}
+.tcard .role{display:block;font-weight:500;font-size:.8rem;color:var(--sec-body);margin-top:3px}
+
+@media (max-width:920px){
+  .quote + .tgrid{margin-top:36px}
+  .thead + .quote{margin-top:32px}
+}
+
 @media (max-width:620px){
   /* iOS Safari zooms the whole page in when you focus a field smaller than
      16px, and does not zoom back out afterwards. Nothing else fixes this: it
