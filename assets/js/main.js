@@ -475,3 +475,36 @@
     closeOpen();
   });
 })();
+
+/* ==========================================================================
+   Testimonials: show three, reveal the rest on request
+   All six are in the HTML. This collapses them and adds the button, so if the
+   script never runs the visitor sees six reviews rather than three and a
+   button that does nothing.
+   ========================================================================== */
+(function () {
+  var grid = document.getElementById('tgrid');
+  if (!grid) return;
+  var more = grid.querySelectorAll('.tcard--more');
+  if (!more.length) return;
+
+  grid.classList.add('is-collapsed');
+
+  var wrap = document.createElement('div');
+  wrap.className = 'tmore';
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn btn--outline';
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', 'tgrid');
+  btn.textContent = 'Read more reviews';
+
+  btn.addEventListener('click', function () {
+    var open = !grid.classList.toggle('is-collapsed');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.textContent = open ? 'Show fewer reviews' : 'Read more reviews';
+  });
+
+  wrap.appendChild(btn);
+  grid.parentNode.insertBefore(wrap, grid.nextSibling);
+})();

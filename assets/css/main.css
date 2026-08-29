@@ -712,9 +712,22 @@ body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
 .tcard figcaption{margin-top:auto;font-size:.92rem;font-weight:600;color:var(--sec-ink)}
 .tcard .role{display:block;font-weight:500;font-size:.8rem;color:var(--sec-body);margin-top:3px}
 
+/* Single testimonial on an inner page: same component, quieter. */
+.quote--sm blockquote{font-size:clamp(1.12rem,2vw,1.45rem);margin:4px 0 18px}
+.quote--sm .quote__mark{font-size:3.4rem}
+.quote figcaption .role{display:block;font-weight:500;font-size:.82rem;color:var(--sec-body);margin-top:4px}
+
+/* The extra three are in the HTML so search engines and anyone without
+   JavaScript get all six. main.js collapses them and adds the button, so a
+   failed script leaves six visible reviews rather than three and a dead
+   button. */
+.tgrid.is-collapsed .tcard--more{display:none}
+.tmore{display:flex;justify-content:center;margin-top:34px}
+
 @media (max-width:920px){
   .quote + .tgrid{margin-top:36px}
   .thead + .quote{margin-top:32px}
+  .tmore{margin-top:26px}
 }
 
 @media (max-width:620px){
