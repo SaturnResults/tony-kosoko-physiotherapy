@@ -1,8 +1,4 @@
-# PREVIEW BUILD.
-# This file only has any effect at a domain ROOT. The preview lives in a
-# subdirectory, where crawlers never read it, so the real protection is the
-# noindex meta tag in every page's <head>. Both are controlled by the
-# PREVIEW flag at the top of build_site.py: set it to False and rebuild.
-
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://tonykosokophysiotherapy.com/sitemap.xml
