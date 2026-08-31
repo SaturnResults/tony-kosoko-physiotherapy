@@ -162,7 +162,9 @@ h1,h2,h3,h4{margin:0}
 .eyebrow{display:block;font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:22px;line-height:1.5}
 .eyebrow .spark{display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:9px;color:var(--teal-bright)}
 .hero h1{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:clamp(2.6rem,6.4vw,5.6rem);line-height:1.02;letter-spacing:-.01em;margin:0 0 20px;color:#fff;max-width:15ch;text-wrap:balance}
-.hero__sub{font-size:clamp(1rem,1.5vw,1.22rem);line-height:1.55;color:rgba(255,255,255,.9);max-width:52ch;margin:0 auto}
+.hero__sub{/* The 1rem floor is left alone so phones are unchanged; the scaling part
+   and the ceiling are both up 20%, which lifts laptops and desktops only. */
+  font-size:clamp(1rem,1.8vw,1.464rem);line-height:1.55;color:rgba(255,255,255,.9);max-width:52ch;margin:0 auto}
 
 .booking{margin:38px auto 0;width:min(940px,100%);background:rgba(255,255,255,.74);-webkit-backdrop-filter:blur(22px) saturate(1.6);backdrop-filter:blur(22px) saturate(1.6);border:1px solid rgba(255,255,255,.5);color:var(--ink);border-radius:var(--radius);box-shadow:0 26px 60px -26px rgba(0,0,0,.6);display:flex;align-items:stretch;padding:9px 9px 9px 6px;gap:4px}
 .booking__field{flex:1;display:flex;align-items:center;gap:11px;padding:8px 14px;border-radius:var(--radius);position:relative;min-width:0}
