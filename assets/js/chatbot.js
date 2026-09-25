@@ -91,7 +91,7 @@
 
   var INTENTS = [
     { keys: ['how much', 'cost', 'price', 'fee', 'charge', 'pricing', 'expensive', 'rates'],
-      reply: { text: 'The initial assessment is <strong>&pound;145</strong> and lasts 45 to 60 minutes.<br><br>Follow-ups are <strong>&pound;97</strong> for 30 minutes, <strong>&pound;125</strong> for 45 minutes and <strong>&pound;160</strong> for 60 minutes. Home visits are priced on application.',
+      reply: { text: 'The initial assessment is <strong>&pound;145</strong> and lasts 45 to 60 minutes.<br><br>Follow-ups are <strong>&pound;97</strong> for 30 minutes, <strong>&pound;125</strong> for 45 minutes and <strong>&pound;160</strong> for 60 minutes.<br><br>Men&rsquo;s health physiotherapy is <strong>&pound;160</strong> for 60 minutes. Home visits are priced on application.',
               acts: ['fees', 'book'] } },
 
     { keys: ['insurance', 'insurer', 'bupa', 'axa', 'vitality', 'aviva', 'covered', 'claim'],
