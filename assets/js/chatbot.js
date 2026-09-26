@@ -91,7 +91,7 @@
 
   var INTENTS = [
     { keys: ['how much', 'cost', 'price', 'fee', 'charge', 'pricing', 'expensive', 'rates'],
-      reply: { text: 'The initial assessment is <strong>&pound;145</strong> and lasts 60 minutes.<br><br>Follow-ups are <strong>&pound;97</strong> for 30 minutes, <strong>&pound;120</strong> for 45 minutes and <strong>&pound;160</strong> for 60 minutes. Men&rsquo;s health physiotherapy is <strong>&pound;160</strong> for 60 minutes.<br><br>Strength and conditioning is <strong>&pound;120</strong> one to one, or <strong>&pound;130</strong> semi-private for two, per 60 minute session. Blocks of ten are <strong>&pound;1,200</strong> one to one and <strong>&pound;1,300</strong> semi-private.<br><br>Home visits are priced on application.',
+      reply: { text: 'The initial assessment is <strong>&pound;145</strong> and lasts 45 to 60 minutes.<br><br>Follow-ups are <strong>&pound;97</strong> for 30 minutes, <strong>&pound;125</strong> for 45 minutes and <strong>&pound;160</strong> for 60 minutes. Men&rsquo;s health physiotherapy is <strong>&pound;160</strong> for 60 minutes.<br><br>Strength and conditioning is <strong>&pound;120</strong> one to one, or <strong>&pound;130</strong> semi-private for two, per 60 minute session. Blocks of ten are <strong>&pound;1,200</strong> one to one and <strong>&pound;1,300</strong> semi-private.<br><br>Home visits are priced on application.',
               acts: ['fees', 'book'] } },
 
     { keys: ['insurance', 'insurer', 'bupa', 'axa', 'vitality', 'aviva', 'covered', 'claim'],
@@ -119,7 +119,7 @@
               acts: ['expect', 'book'] } },
 
     { keys: ['how long', 'duration', 'length', 'how many minutes'],
-      reply: { text: 'Initial appointments are 60 minutes. Follow-ups are 30, 45 or 60 minutes, depending on what you need. Strength and conditioning sessions are always 60 minutes.',
+      reply: { text: 'Initial appointments are 45 to 60 minutes. Follow-ups are 30, 45 or 60 minutes, depending on what you need. Strength and conditioning sessions are always 60 minutes.',
               acts: ['fees', 'book'] } },
 
     { keys: ['physio', 'musculoskeletal', 'msk', 'back', 'neck', 'shoulder', 'spine', 'sciatica', 'knee', 'hip', 'injury', 'sports injury', 'dance'],
@@ -175,7 +175,7 @@
   };
 
   var CLINICAL_REPLY = {
-    text: 'I cannot help with symptoms or give any medical advice, and it would not be fair to guess about your body.<br><br>That is exactly what the initial assessment is for. Tony spends a full 60 minutes listening and examining properly before saying anything about what is going on.',
+    text: 'I cannot help with symptoms or give any medical advice, and it would not be fair to guess about your body.<br><br>That is exactly what the initial assessment is for. Tony spends 45 to 60 minutes listening and examining properly before saying anything about what is going on.',
     acts: ['book', 'call']
   };
 
