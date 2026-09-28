@@ -735,6 +735,26 @@ body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
   .tmore{margin-top:26px}
 }
 
+/* ---------------- booking embed (GoHighLevel) ----------------
+   The calendar is a third-party iframe that reports its own height by
+   postMessage via form_embed.js, but that resize is unreliable: it did not
+   fire at all in testing. So the frame gets a fixed height and is allowed to
+   scroll internally, which means nothing is ever clipped out of reach. If
+   form_embed.js does report a height, its inline style wins over this.
+   .preview-note goes when the page goes live. */
+.bookwrap{max-width:980px;margin:0 auto}
+.bookembed{background:var(--sec-card);border:1px solid var(--sec-border);border-radius:20px;overflow:hidden;padding:6px}
+.bookembed iframe{display:block;width:100%;height:820px;border:0}
+.bookfall{margin:18px 0 0;text-align:center;font-size:.95rem;color:var(--sec-body)}
+.bookfall[hidden]{display:none}
+.preview-note{display:inline-block;margin:0 0 18px;padding:10px 16px;border-radius:999px;background:rgba(255,196,84,.14);border:1px solid rgba(255,196,84,.42);color:#FFD79A;font-size:.88rem;line-height:1.5}
+.preview-note b{color:#FFE7C2}
+
+@media (max-width:620px){
+  .bookembed iframe{height:700px}
+  .preview-note{display:block;border-radius:14px}
+}
+
 @media (max-width:620px){
   /* iOS Safari zooms the whole page in when you focus a field smaller than
      16px, and does not zoom back out afterwards. Nothing else fixes this: it
