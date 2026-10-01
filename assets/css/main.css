@@ -755,6 +755,14 @@ body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
   .preview-note{display:block;border-radius:14px}
 }
 
+/* ---- payment outcome pages ---------------------------------------------
+   A status line above the heading on /payment-received/ and /payment-failed/.
+   Semantic colour, carried with words as well, never colour alone. */
+.paystate{display:inline-flex;align-items:center;gap:9px;margin:0 0 18px;padding:7px 16px;border-radius:999px;font-size:.82rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.paystate::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.paystate--ok{background:rgba(69,214,196,.13);color:#5FE0D0}
+.paystate--warn{background:rgba(255,196,84,.14);color:#FFD79A}
+
 @media (max-width:620px){
   /* iOS Safari zooms the whole page in when you focus a field smaller than
      16px, and does not zoom back out afterwards. Nothing else fixes this: it
