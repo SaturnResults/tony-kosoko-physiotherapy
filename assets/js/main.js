@@ -42,7 +42,12 @@
 
   /* ---- header ---- */
   var header = document.getElementById('siteHeader');
-  if (header) {
+  /* A page can opt out with data-static-header, which leaves the header
+     docked at the top of the document so it scrolls away and stays away,
+     rather than lifting off into the floating pill and reappearing on the
+     way back up. Used on the booking page, where a bar sliding over a
+     third-party calendar is a nuisance. */
+  if (header && !header.hasAttribute('data-static-header')) {
     var hero = document.querySelector('.hero') || document.querySelector('.page-hero');
 
     /* While the hero is on screen the header belongs to it: transparent, no
