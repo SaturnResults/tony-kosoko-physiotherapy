@@ -751,6 +751,14 @@ body.no-scroll .tkc-launch,body.no-scroll .tkc-panel{display:none}
 .preview-note b{color:#FFE7C2}
 
 @media (max-width:620px){
+  /* The calendar's day grid is what suffers on a phone. The .wrap gutter plus
+     the card's own padding left the iframe 325px wide on a 375px screen, with
+     date cells too small to hit confidently. Break the card out of the wrap
+     padding down to an 8px gutter and drop the inner padding, which hands the
+     calendar back about 32px, roughly a tenth of the screen. The margin sits
+     on .bookembed rather than .bookwrap so the "open in a new tab" line below
+     keeps the page's normal gutter. */
+  .bookembed{margin-inline:calc(8px - clamp(18px,4vw,44px));padding:0;border-radius:14px}
   .bookembed iframe{height:700px}
   .preview-note{display:block;border-radius:14px}
 }
